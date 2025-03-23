@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
 
 class MainController extends Controller
 {
@@ -158,9 +159,15 @@ class MainController extends Controller
     //get category videos by category id
     public function getCategoryVideosById(Request $request)
     {
-        $request->validate([
-            'category_id' => 'required|integer',
+        $validator = Validator::make($request->all(), [
+            'category_id' => 'required|integer|exists:categories,id'
         ]);
+        if($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => $validator->errors()->first()
+            ], 400);
+        }
 
         $category = Category::find($request->category_id);
 

@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { getYouTubeVideoId } from "../../helper";
 
-const HoverPlayYouTube = ({ videoUrl, thumbnail }) => {
+const HoverPlayYouTube = ({ videoUrl, thumbnail,height }) => {
     const videoRef = useRef(null);
     const videoId = getYouTubeVideoId(videoUrl);
     console.log(videoId, "videoId");
@@ -16,7 +16,7 @@ const HoverPlayYouTube = ({ videoUrl, thumbnail }) => {
 
     return (
         <div
-            className="w-full h-[210px] bg-gray-900 rounded-lg overflow-hidden"
+            className={` w-full h-[${height}px] bg-gray-900 rounded-lg overflow-hidden mb-4 `}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
             style={{ backgroundImage: `url(${thumbnail})`, backgroundSize: "cover", backgroundPosition: "center", backgroundRepeat: "no-repeat" }}

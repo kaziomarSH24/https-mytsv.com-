@@ -49,7 +49,8 @@ Route::prefix('Main')->group(function () {
     Route::get('getBlog/{slug}', [MainController::class, 'getBlog']);
 
     //get category videos
-    Route::get('getCategoryVideos/', [MainController::class, 'getCategoryVideos']);
+    Route::get('/getCategoryVideos', [MainController::class, 'getCategoryVideos']);
+    Route::get('/category-video', [MainController::class, 'getCategoryVideosById']);
 });
 
 Route::prefix('Video')->group(function () {
