@@ -12,20 +12,18 @@ import { FaInfoCircle } from "react-icons/fa";
 import Skeleton from "react-loading-skeleton";
 import { BiNews, BiSolidVideoPlus } from "react-icons/bi";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { useState, useRef, useEffect, Fragment } from "react";
+import { useState, useRef, useEffect } from "react";
 import { IoClose, IoLocationSharp } from "react-icons/io5";
 import { Tooltip as ReactTooltip } from "react-tooltip";
-import { BsChevronUp, BsGlobeAmericas, BsGraphUpArrow, BsChevronLeft, BsChevronRight } from "react-icons/bs";
-// import BsChevronLeft from '@meronex/icons/bs/BsChevronLeft';
+import { BsChevronUp, BsGlobeAmericas, BsGraphUpArrow } from "react-icons/bs";
 import { IoMdClose, IoMdNotifications, IoMdNotificationsOutline } from "react-icons/io";
 import { AiFillPlayCircle, AiFillSetting } from "react-icons/ai";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { useDetectClickOutside } from "react-detect-click-outside";
 import { imageUrl } from "../../helper";
 import { usePrimary } from "../../context/PrimaryContext";
-import { Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules';
 
-const Header = ({ states, categories, locator }) => {
+const Headerco = ({ states, categories, locator }) => {
     const { query } = useParams();
     const navigate = useNavigate();
     const url = useLocation();
@@ -46,7 +44,6 @@ const Header = ({ states, categories, locator }) => {
     const userRef = useDetectClickOutside({ onTriggered: () => setShowDropdown(false) });
     const notificationRef = useDetectClickOutside({ onTriggered: () => setNotificationDropdown(false) });
     const locationRef = useRef(null);
-    const swiperRef = useRef(null);
 
     const getUser = async () => {
         const user = await axios.get("Auth/Me");
@@ -103,41 +100,19 @@ const Header = ({ states, categories, locator }) => {
 
         return (
             <>
-                <div className={`px-3 py-2 rounded-lg border font-Roboto text-[14px] ${!query && "bg-gray-600 text-white"}`}>
+                <div className={`bg-gray-100 py-1 px-4 rounded-md ${!query && "bg-gray-600 text-white"}`}>
                     <Link to={`/`}>All</Link>
                 </div>
 
-                <Swiper
-                    className="relative"
-                    modules={[Navigation]}
-                    // navigation
-                    spaceBetween={10}
-                    slidesPerView="auto"
-                    freeMode={true}
-                    // pagination={{ clickable: true }}
-                    onSwiper={(swiper) => (swiperRef.current = swiper)}
-                    >
+                <Swiper spaceBetween={10} slidesPerView="auto" freeMode={true}>
                     {categories.map((category) => (
                         <SwiperSlide key={category.id} style={{ width: "auto" }}>
-                            <div className={`px-3 py-2 rounded-lg border font-Roboto text-[14px] ${query === `${category.title}` ? "bg-gray-600 text-white" : ""}`}>
+                            <div className={`bg-gray-100 py-1 px-4 rounded-md ${query === `${category.title}` ? "bg-gray-600 text-white" : ""}`}>
                                 <Link to={`/search/${category.title}`}>{category.title}</Link>
                             </div>
                         </SwiperSlide>
                     ))}
-
                 </Swiper>
-
-                <button className="absolute top-3 left-0  text-slate-800 px-4 py-2 rounded "
-                onClick={() => swiperRef.current?.slidePrev()}
-            >
-                <BsChevronLeft size={40} />
-            </button>
-            <button
-                className="absolute top-3 right-[-5px]  text-slate-800 px-4 py-2 rounded"
-                onClick={() => swiperRef.current?.slideNext()}
-            >
-                <BsChevronRight size={40} />
-            </button>
             </>
         );
     };
@@ -572,15 +547,14 @@ const Header = ({ states, categories, locator }) => {
                 </div>
 
                 {/* Categories Section */}
-
-            </div>
-            <div className={`max-w-[1167px] mx-auto bg-white z-30 md:rounded-b-2xl transition-all duration-300 ${showCategories ? "translate-y-0 pointer-events-auto" : "opacity-0 -translate-y-full pointer-events-none"}`}>
+                <div className={`bg-white border-t shadow-[0px_5px_10px_0px_rgba(0,0,0,0.1)] z-30 md:rounded-b-2xl transition-all duration-300 ${showCategories ? "translate-y-0 pointer-events-auto" : "opacity-0 -translate-y-full pointer-events-none"}`}>
                     <div className="sm:container md:py-4 py-3 overflow-hidden">
                         <div className="flex md:gap-x-4 pl-2 sm:pl-0 gap-x-2 md:text-lg text-sm whitespace-nowrap">{renderCategoryLinks()}</div>
                     </div>
+                </div>
             </div>
         </>
     );
 };
 
-export default Header;
+export default Headerco;

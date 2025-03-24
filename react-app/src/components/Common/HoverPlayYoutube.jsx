@@ -4,7 +4,6 @@ import { getYouTubeVideoId } from "../../helper";
 const HoverPlayYouTube = ({ videoUrl, thumbnail,height }) => {
     const videoRef = useRef(null);
     const videoId = getYouTubeVideoId(videoUrl);
-    console.log(videoId, "videoId");
 
     const handleMouseEnter = () => {
         videoRef.current.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1`;

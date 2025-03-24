@@ -47,11 +47,11 @@ const ViewDetails = () => {
 
     return (
         <>
-            <div className="bg-gray-800 sm:pt-10 sm:pb-20 pattern">
+            {/* <div className="bg-gray-800 sm:pt-10 sm:pb-20 pattern">
                 <div className="sm:container">
                     <h2 className="text-white sm:text-5xl text-3xl font-semibold px-2">{videos[0]?.category?.title ?? <Skeleton baseColor="#475569" borderRadius={30} width={250} height={50} />}</h2>
                 </div>
-            </div>
+            </div> */}
             <div className="max-w-[1167px] mx-auto mt-10 px-4 pb-[40px] lg:pb-[64px]">
                 {/* all data show */}
                 <InfiniteScroll

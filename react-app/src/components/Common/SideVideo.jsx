@@ -18,9 +18,9 @@ const SideVideo = ({ info }) => {
                                     <img src={imageUrl(info.thumbnail?.default)} alt="" className="w-full h-full object-cover rounded-lg" />
 
                                     <div className="absolute inset-0 flex videos-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 top-[60%] left-[50%] transform translate-x-[-50%] translate-y-[-50%]">
-                                        <a href="#" className="text-[#FFFFFF] text-3xl">
+                                        <p className="text-[#FFFFFF] text-3xl">
                                             <IoMdPlay className="text-[#FFFFFF]" />
-                                        </a>
+                                        </p>
                                     </div>
 
                                     <div className="absolute top-0 right-0 z-30 m-2 px-4 py-1 rounded-md bg-[#999999] text-[12px] font-Roboto text-[#FFFF] opacity-0 group-hover:opacity-100 transition-opacity duration-300">Paid</div>

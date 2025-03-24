@@ -36,8 +36,8 @@ const Video = () => {
         const totalVotes = likes + dislikes;
         return totalVotes === 0 ? 0 : (likes / totalVotes) * 100;
     };
-    console.log(state, "+-------------------------");
 
+console.log(data,"data");
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -92,7 +92,7 @@ const Video = () => {
                     <picture>
                         <source media="(max-width: 767px)" srcSet={imageUrl(comment.user?.avatar?.mobile)} />
                         <source media="(max-width: 1023px)" srcSet={imageUrl(comment.user?.avatar?.tablet)} />
-                        <img src={imageUrl(video.user?.avatar?.default)} className="w-[50px] h-[50px] rounded-full" alt={comment.user?.name} />
+                        <img src={imageUrl(comment.user?.avatar?.default)} className="w-[50px] h-[50px] rounded-full" alt={comment.user?.name} />
                     </picture>
                     <div>
                         <h3 className="flex items-center gap-2 font-bold">
@@ -133,8 +133,9 @@ const Video = () => {
     };
 
     const Interaction = async (status) => {
-        console.log(data.interaction,"++ss++++++++++++++++++++++++");
+        // console.log(data.interaction,"++ss++++++++++++++++++++++++");
         if (!state.user) return toast.error("Require Authorization");
+        console.log(state.user.avatar, "state.user");
         if (status === data.interaction) return;
 
         const res = await axios.post("Video/Interaction", {
@@ -301,22 +302,6 @@ const Video = () => {
                                     {video.description} {/*<span className="text-secondery font-Roboto text-[14px] cursor-pointer text-blue-600 ">Read more...</span>*/}
                                 </p>
                             </div>
-
-                            {/* text area component */}
-                            <div>
-                                <div className="flex items-center gap-4">
-                                    <img src="/mostPopular/photo1.png" alt="" className="h-[40px] w-[40px] rounded-full" />
-                                    <div className="w-full border-b flex items-center">
-                                        <textarea className="w-full h-[40px] resize-none outline-none p-0 pt-2 text-base leading-normal" placeholder="I’d love to hear your thoughts on this" />
-                                    </div>
-                                </div>
-
-                                <div className="flex items-center justify-end gap-2 pt-3">
-                                    <button className="border border-[#E0E0E0] text-[#666666] font-Roboto text-[16px] px-6 py-[3px] rounded-full">Cancel</button>
-
-                                    <button className="bg-blue-600  text-[#FFFFFF] font-Roboto text-[16px] px-6 py-[3px] rounded-full">Comment</button>
-                                </div>
-                            </div>
                         </div>
                         <div className="md:rounded-3xl bg-gray-100 drop-shadow md:p-8 p-4">
                                 {state.user && (
@@ -328,7 +313,7 @@ const Video = () => {
                                             </div>
                                         )}
                                         <form onSubmit={addComment} className="flex items-center gap-3 mb-4">
-                                            <img src={state.user?.avatar} className="w-8 h-8 sm:w-[45px] sm:h-[45px] rounded-full" alt="Avatar" />
+                                            <img src={state.user?.avatar?.default} className="w-8 h-8 sm:w-[45px] sm:h-[45px] rounded-full" alt="Avatar" />
                                             <input type="text" ref={commentInput} className="flex-1 text-sm sm:text-base text-gray-500 border-b border-gray-300 bg-transparent outline-none py-2" placeholder="Add Comment" onChange={(e) => setComment(e.target.value)} />
                                             <button type="submit" className="text-primary">
                                                 <BiLogoTelegram className="text-2xl sm:text-4xl cursor-pointer" />
