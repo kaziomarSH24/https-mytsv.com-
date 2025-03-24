@@ -8,7 +8,7 @@ const AvatarUpload = ({ user, onAvatarChange, onAvatarDelete }) => {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        setPreviewUrl(user.avatar?.default)
+        setPreviewUrl(user?.avatar?.default)
     }, [user]);
 
     const handleFileChange = async (event) => {
@@ -39,7 +39,7 @@ const AvatarUpload = ({ user, onAvatarChange, onAvatarDelete }) => {
             await new Promise(resolve => setTimeout(resolve, 1000));
             await onAvatarChange(file);
         } catch (err) {
-            setError('Failed to upload image. Please try again.');
+            setError(err);
         } finally {
             setIsUploading(false);
         }

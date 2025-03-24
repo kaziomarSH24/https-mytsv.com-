@@ -21,6 +21,8 @@ class MainController extends Controller
 {
     public function primary(Request $request)
     {
+        $user = Auth::user();
+        $data['user'] = $user;
         $data['locations'] = $this->getLocations();
         $data['categories'] = $this->getCategories();
         $data['settings'] = Setting::all()->pluck('value', 'name');
@@ -61,6 +63,7 @@ class MainController extends Controller
     }
     public function getUser(Request $request)
     {
+        // return $request->all();
         $request->validate([
             'id' => 'required|integer',
         ]);

@@ -16,10 +16,10 @@ const HoverPlayYouTube = ({ videoUrl, thumbnail,height }) => {
 
     return (
         <div
-            className={` w-full h-[${height}px] bg-gray-900 rounded-lg overflow-hidden mb-4 `}
+            className={` w-full bg-gray-900 rounded-lg overflow-hidden mb-4 `}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
-            style={{ backgroundImage: `url(${thumbnail})`, backgroundSize: "cover", backgroundPosition: "center", backgroundRepeat: "no-repeat" }}
+            style={{ backgroundImage: `url(${thumbnail})`, backgroundSize: "cover", backgroundPosition: "center", backgroundRepeat: "no-repeat", height: `${height}` }}
         >
             <iframe
                 ref={videoRef}

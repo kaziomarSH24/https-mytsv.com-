@@ -17,6 +17,7 @@ const Signin = () => {
         }
         if (params?.social) {
             axios.post(`/Auth/Social/${params.social}/Callback${location?.search}`).then((response) => {
+
                 if (response.data?.access_token) {
                     localStorage.setItem("accessToken", response.data.access_token);
                     dispatch({ type: "SET_USER", payload: response.data.access_token });
@@ -39,7 +40,8 @@ const Signin = () => {
             try {
                 const res = await axios.post("Auth/Login", { email, password });
                 localStorage.setItem("accessToken", res.data?.access_token);
-                dispatch({ type: "SET_USER", payload: res.data.access_token });
+                console.log(res.data, "response login page");
+                dispatch({ type: "SET_USER", payload: res.data }); 
 
                 if (res.data.status !== "error") {
                     navigate("/");

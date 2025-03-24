@@ -7,7 +7,7 @@ import { usePrimary } from "../../context/PrimaryContext";
 // axios.defaults.baseURL = "http://127.0.0.1:8000/api/" //add this line to set base url for axios
 const Signup = () => {
     const navigate = useNavigate();
-    const { state } = usePrimary();
+    const { state, dispatch } = usePrimary();
 
     useEffect(() => {
         if (state.user) {
@@ -41,7 +41,8 @@ const Signup = () => {
 
                 if (res.data?.status === "success") {
                     localStorage.setItem("accessToken", res.data?.token);
-
+                    console.log(res.data,"35345345345345435634");
+                    dispatch({ type: "SET_USER", payload: res.data?.user });
                     toast.success("Successfully registered");
                     navigate("/User/Settings");
                 }

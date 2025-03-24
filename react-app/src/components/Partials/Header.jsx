@@ -21,12 +21,13 @@ import { AiFillPlayCircle, AiFillSetting } from "react-icons/ai";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { useDetectClickOutside } from "react-detect-click-outside";
 import { imageUrl } from "../../helper";
+import { usePrimary } from "../../context/PrimaryContext";
 
 const Header = ({ states, categories, locator }) => {
     const { query } = useParams();
     const navigate = useNavigate();
     const url = useLocation();
-
+    const { dispatch } = usePrimary();
     const prevScrollY = useRef(0);
     const [user, setUser] = useState({});
     const [location, setLocation] = useState({});
@@ -46,7 +47,7 @@ const Header = ({ states, categories, locator }) => {
 
     const getUser = async () => {
         const user = await axios.get("Auth/Me");
-        console.log(user);
+        dispatch({ type: "SET_USER", payload: user.data });
         setUser(user.data)
     }
 

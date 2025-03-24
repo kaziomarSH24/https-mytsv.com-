@@ -66,7 +66,7 @@ const CategoryVideo = () => {
                                                                             {/* Image container with hover effect */}
                                                                             <div className="relative group">
                                                                                 {/* <img src={imageUrl(video?.thumbnail?.default)} alt="popular photo" className="object-contain w-full mb-4 transition-transform duration-300 transform group-hover:scale-105 group-hover:opacity-70 group-hover:transform-origin-center" /> */}
-                                                                                <HoverPlayYouTube height={210} videoUrl={video?.video} thumbnail={imageUrl(video?.thumbnail?.default)} />
+                                                                                <HoverPlayYouTube height={'210px'} videoUrl={video?.video} thumbnail={imageUrl(video?.thumbnail?.default)} />
 
                                                                                 <div className="absolute inset-0 flex videos-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 top-[60%] left-[50%] transform translate-x-[-50%] translate-y-[-50%]">
                                                                                     <a href="#" className="text-[#FFFFFF] text-3xl">

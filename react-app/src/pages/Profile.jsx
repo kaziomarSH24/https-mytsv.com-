@@ -24,6 +24,7 @@ const Profile = () => {
                     const res = await axios.get("Main/getUser", {
                         params: { id: params.id },
                     });
+                    console.log(res.data, "res.data");
                     setUserInfo(res.data?.user);
                     setReviews(res.data?.reviews);
                     setVideos(res.data?.videos);
@@ -52,7 +53,7 @@ const Profile = () => {
     };
 
 
-
+console.log(userInfo?.avatar?.default, "userInfo");
     return (
         <>
             <div className="pt-12 pb-28 pattern bg-red-950">
@@ -64,10 +65,10 @@ const Profile = () => {
                 <div className="shadow-lg rounded-2xl py-10 px-12 bg-white">
                     <div className="flex items-center gap-8 mb-6">
                         <picture>
-                            <source media="(max-width: 767px)" srcSet={imageUrl(userInfo.avatar?.mobile)} />
-                            <source media="(max-width: 1023px)" srcSet={imageUrl(userInfo.avatar?.tablet)} />
+                            <source media="(max-width: 767px)" srcSet={imageUrl(userInfo?.avatar?.mobile)} />
+                            <source media="(max-width: 1023px)" srcSet={imageUrl(userInfo?.avatar?.tablet)} />
                             <img
-                                src={imageUrl(userInfo.avatar?.default)}
+                                src={imageUrl(userInfo?.avatar?.default)}
                                 className="w-40 h-40 rounded-full border-4 border-primary object-cover"
                                 alt={userInfo?.name}
                             />

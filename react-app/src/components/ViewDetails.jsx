@@ -47,6 +47,11 @@ const ViewDetails = () => {
 
     return (
         <>
+            <div className="bg-gray-800 sm:pt-10 sm:pb-20 pattern">
+                <div className="sm:container">
+                    <h2 className="text-white sm:text-5xl text-3xl font-semibold px-2">{videos[0]?.category?.title ?? <Skeleton baseColor="#475569" borderRadius={30} width={250} height={50} />}</h2>
+                </div>
+            </div>
             <div className="max-w-[1167px] mx-auto mt-10 px-4 pb-[40px] lg:pb-[64px]">
                 {/* all data show */}
                 <InfiniteScroll
@@ -77,7 +82,7 @@ const ViewDetails = () => {
                                                         {/* <img src={imageUrl(video.thumbnail.default)} alt="popular photo" className="object-contain w-full mb-4 transition-transform duration-300 transform group-hover:scale-105 group-hover:opacity-70 group-hover:transform-origin-center" /> */}
                                                         <HoverPlayYouTube height={250} videoUrl={video.video} thumbnail={imageUrl(video.thumbnail.default)} />
                                                         {/* Home Icon in the middle */}
-                                                        <div className="absolute inset-0 left-[50%] top-[50%] transform translate-x-[-50%] translate-y-[-50%] w-[40px] h-[40px]  rounded-lg   opacity-100 transition-opacity duration-300   ">
+                                                        <div className="absolute inset-0 left-[50%] top-[50%] transform translate-x-[-50%] translate-y-[-50%] w-[40px] h-[40px] opacity-0 rounded-lg group-hover:opacity-100 transition-opacity duration-300   ">
                                                             <a href="#" className="text-[#FFFFFF] text-3xl">
                                                                 <IoMdPlay className="text-[#FFFFFF]" />
                                                             </a>
