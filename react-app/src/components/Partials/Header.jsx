@@ -23,7 +23,7 @@ import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { useDetectClickOutside } from "react-detect-click-outside";
 import { imageUrl } from "../../helper";
 import { usePrimary } from "../../context/PrimaryContext";
-import { Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules';
+import { Navigation, Pagination, Scrollbar, A11y } from "swiper/modules";
 
 const Header = ({ states, categories, locator }) => {
     const { query } = useParams();
@@ -51,13 +51,13 @@ const Header = ({ states, categories, locator }) => {
     const getUser = async () => {
         const user = await axios.get("Auth/Me");
         // dispatch({ type: "SET_USER", payload: user.data });
-        setUser(user.data)
-    }
+        setUser(user.data);
+    };
 
     const getLocation = async () => {
         const location = await axios.get("Main/getLocation");
         setLocation(location.data);
-    }
+    };
 
     useEffect(() => {
         getUser();
@@ -116,7 +116,7 @@ const Header = ({ states, categories, locator }) => {
                     freeMode={true}
                     // pagination={{ clickable: true }}
                     onSwiper={(swiper) => (swiperRef.current = swiper)}
-                    >
+                >
                     {categories.map((category) => (
                         <SwiperSlide key={category.id} style={{ width: "auto" }}>
                             <div className={`px-3 py-2 rounded-lg border font-Roboto text-[14px] ${query === `${category.title}` ? "bg-gray-600 text-white" : ""}`}>
@@ -124,20 +124,18 @@ const Header = ({ states, categories, locator }) => {
                             </div>
                         </SwiperSlide>
                     ))}
-
                 </Swiper>
 
-                <button className="absolute top-3 left-0  text-slate-800 px-4 py-2 rounded "
-                onClick={() => swiperRef.current?.slidePrev()}
-            >
-                <BsChevronLeft size={40} />
-            </button>
-            <button
-                className="absolute top-3 right-[-5px]  text-slate-800 px-4 py-2 rounded"
-                onClick={() => swiperRef.current?.slideNext()}
-            >
-                <BsChevronRight size={40} />
-            </button>
+                <button className="absolute top-5 left-6 text-slate-800 px-4 py-2 rounded hidden md:block" onClick={() => swiperRef.current?.slidePrev()}>
+                    <svg width="15" height="20" viewBox="0 0 13 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M10.975 20L12.75 18.225L4.525 10L12.75 1.775L10.975 0L0.974999 10L10.975 20Z" fill="#666666" />
+                    </svg>
+                </button>
+                <button className="absolute top-5 right-3  text-slate-800 px-4 py-2 rounded hidden md:block" onClick={() => swiperRef.current?.slideNext()}>
+                    <svg width="15" height="20" viewBox="0 0 13 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M2.525 20L0.75 18.225L8.975 10L0.75 1.775L2.525 0L12.525 10L2.525 20Z" fill="#666666" />
+                    </svg>
+                </button>
             </>
         );
     };
@@ -166,11 +164,10 @@ const Header = ({ states, categories, locator }) => {
         }
     };
 
-
     const loadCitiesData = async (stateValue) => {
         try {
             const res = await axios.get(`Main/getLocations/${stateValue}`);
-            setCitiesData(Object.keys(res.data).map(key => ({ value: key, label: res.data[key] })));
+            setCitiesData(Object.keys(res.data).map((key) => ({ value: key, label: res.data[key] })));
         } catch (error) {
             console.error("Error loading cities:", error);
         }
@@ -187,7 +184,7 @@ const Header = ({ states, categories, locator }) => {
 
     const handleSaveLocation = async () => {
         try {
-            await axios.post('Main/updateLocation', {
+            await axios.post("Main/updateLocation", {
                 state: selectedState?.value,
                 city: selectedCity?.value,
             });
@@ -221,9 +218,9 @@ const Header = ({ states, categories, locator }) => {
                                 <IoClose className="text-3xl cursor-pointer" onClick={() => setLocationModal(false)} />
                             </div>
                             {locator && (
-                                <h2 className='font-medium text-gray-700 text-2xl flex items-center justify-center gap-2'>
+                                <h2 className="font-medium text-gray-700 text-2xl flex items-center justify-center gap-2">
                                     {location?.city}
-                                    <BsGlobeAmericas className='mt-1' />
+                                    <BsGlobeAmericas className="mt-1" />
                                 </h2>
                             )}
                             <div className="flex gap-6 w-full mb-10 mt-5">
@@ -279,7 +276,9 @@ const Header = ({ states, categories, locator }) => {
                                 <button className="bg-white border rounded-xl px-8 py-2" onClick={() => setLocationModal(false)}>
                                     Close
                                 </button>
-                                <button className="bg-primary text-white rounded-xl px-8 py-2" onClick={handleSaveLocation}>Save</button>
+                                <button className="bg-primary text-white rounded-xl px-8 py-2" onClick={handleSaveLocation}>
+                                    Save
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -304,11 +303,7 @@ const Header = ({ states, categories, locator }) => {
                                     <picture>
                                         <source media="(max-width: 767px)" srcSet={imageUrl(user?.avatar?.mobile)} />
                                         <source media="(max-width: 1023px)" srcSet={imageUrl(user?.avatar?.tablet)} />
-                                        <img
-                                            src={imageUrl(user?.avatar?.default)}
-                                            className="w-12 h-12 rounded-full mr-3 object-cover"
-                                            alt={user?.name}
-                                        />
+                                        <img src={imageUrl(user?.avatar?.default)} className="w-12 h-12 rounded-full mr-3 object-cover" alt={user?.name} />
                                     </picture>
                                     <div className="block text-dark-white">
                                         <p className="text-sm text-gray-700"> Welcome, Back </p>
@@ -458,11 +453,7 @@ const Header = ({ states, categories, locator }) => {
                                         <picture>
                                             <source media="(max-width: 767px)" srcSet={imageUrl(user?.avatar?.mobile)} />
                                             <source media="(max-width: 1023px)" srcSet={imageUrl(user?.avatar?.tablet)} />
-                                            <img
-                                                src={imageUrl(user?.avatar?.default)}
-                                                className="rounded-full w-8 h-8 mr-2"
-                                                alt={user?.name}
-                                            />
+                                            <img src={imageUrl(user?.avatar?.default)} className="rounded-full w-8 h-8 mr-2" alt={user?.name} />
                                         </picture>
                                         <BsChevronUp className={!showDropdown && "rotate-180 hidden md:block"} />
                                     </div>
@@ -560,11 +551,7 @@ const Header = ({ states, categories, locator }) => {
                                 <picture>
                                     <source media="(max-width: 767px)" srcSet={imageUrl(user?.avatar?.mobile)} />
                                     <source media="(max-width: 1023px)" srcSet={imageUrl(user?.avatar?.tablet)} />
-                                    <img
-                                        src={imageUrl(user?.avatar?.default)}
-                                        className="rounded-full w-8 h-8"
-                                        alt={user?.name}
-                                    />
+                                    <img src={imageUrl(user?.avatar?.default)} className="rounded-full w-8 h-8" alt={user?.name} />
                                 </picture>
                             </button>
                         )}
@@ -572,12 +559,11 @@ const Header = ({ states, categories, locator }) => {
                 </div>
 
                 {/* Categories Section */}
-
             </div>
             <div className={`max-w-[1167px] mx-auto bg-white z-30 md:rounded-b-2xl transition-all duration-300 ${showCategories ? "translate-y-0 pointer-events-auto" : "opacity-0 -translate-y-full pointer-events-none"}`}>
-                    <div className="sm:container md:py-4 py-3 overflow-hidden">
-                        <div className="flex md:gap-x-4 pl-2 sm:pl-0 gap-x-2 md:text-lg text-sm whitespace-nowrap">{renderCategoryLinks()}</div>
-                    </div>
+                <div className="sm:container md:py-4 py-3 overflow-hidden">
+                    <div className="flex md:gap-x-4 pl-2 sm:pl-0 gap-x-2 md:text-lg text-sm whitespace-nowrap">{renderCategoryLinks()}</div>
+                </div>
             </div>
         </>
     );

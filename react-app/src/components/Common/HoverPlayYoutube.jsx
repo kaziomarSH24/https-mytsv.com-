@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { getYouTubeVideoId } from "../../helper";
 
-const HoverPlayYouTube = ({ videoUrl, thumbnail,height }) => {
+const HoverPlayYouTube = ({ videoUrl, thumbnail }) => {
     const videoRef = useRef(null);
     const videoId = getYouTubeVideoId(videoUrl);
 
@@ -15,10 +15,10 @@ const HoverPlayYouTube = ({ videoUrl, thumbnail,height }) => {
 
     return (
         <div
-            className={` w-full bg-gray-900 rounded-lg overflow-hidden mb-4 `}
+            className={` w-full h-[200px] mx-auto lg:h-[150px] bg-gray-900 rounded-lg overflow-hidden mb-4 `}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
-            style={{ backgroundImage: `url(${thumbnail})`, backgroundSize: "cover", backgroundPosition: "center", backgroundRepeat: "no-repeat", height: `${height}` }}
+            style={{ backgroundImage: `url(${thumbnail})`, backgroundSize: "cover", backgroundPosition: "center", backgroundRepeat: "no-repeat" }}
         >
             <iframe
                 ref={videoRef}

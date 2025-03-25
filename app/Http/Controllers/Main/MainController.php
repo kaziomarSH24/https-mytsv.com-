@@ -142,7 +142,7 @@ class MainController extends Controller
     {
         $videoPage = request('video_page', 1);
 
-        $categories = Category::has('videos')->paginate(5);
+        $categories = Category::has('videos')->paginate(3);
 
         $categories->getCollection()->transform(function ($category) use ($videoPage) {
             $category->paginated_videos = $category->videos()->with('user')->paginate(8, ['*'], 'video_page', $videoPage);
