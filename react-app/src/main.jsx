@@ -7,6 +7,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "react-loading-skeleton/dist/skeleton.css";
 import { PrimaryProvider } from "./context/PrimaryContext";
+import { LocationProvider } from "./context/LocationContext";
 
 let url = window.location.origin + "/api";
 if (import.meta.env.DEV) {
@@ -30,7 +31,9 @@ axios.interceptors.request.use(
 
 ReactDOM.createRoot(document.getElementById("root")).render(
     <PrimaryProvider>
-        <App />
-        <ToastContainer />
+        <LocationProvider>
+            <App />
+            <ToastContainer />
+        </LocationProvider>
     </PrimaryProvider>
 );

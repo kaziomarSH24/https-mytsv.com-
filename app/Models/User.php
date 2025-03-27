@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Storage;
 
 class User extends Authenticatable implements MustVerifyEmail, JWTSubject
 {
@@ -86,6 +87,10 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
         ];
 
         $folder = 'avatars/' . Str::slug($this->name . $this->id);
+        $publicPath = public_path("storage/{$folder}");
+        if (!file_exists($publicPath)) {
+            mkdir($publicPath, 0755, true);
+        }
         $image->storeAs($folder, 'original.webp', 'public');
 
         $generatedImages = [];
@@ -115,7 +120,7 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
             return [
                 'default' => "https://ui-avatars.com/api/?background=random&name={$this->name}&bold=true",
                 'tablet' => "https://ui-avatars.com/api/?background=random&name={$this->name}&bold=true",
-                'mobile' => 'https://ui-avatars.com/api/?background=random&name={$this->name}&bold=true'
+                'mobile' => "https://ui-avatars.com/api/?background=random&name={$this->name}&bold=true"
             ];
         }
         return json_decode($value);

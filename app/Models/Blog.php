@@ -27,6 +27,10 @@ class Blog extends Model
         ];
 
         $folder = 'blogs/' . $slug;
+        $publicPath = public_path("storage/{$folder}");
+        if(!file_exists($publicPath)){
+            mkdir($publicPath, 0755, true);
+        }
         $image->storeAs($folder, 'original.webp', 'public');
 
         $generatedImages = [];

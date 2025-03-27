@@ -37,7 +37,7 @@ const Video = () => {
         return totalVotes === 0 ? 0 : (likes / totalVotes) * 100;
     };
 
-console.log(data,"data");
+
     useEffect(() => {
         const fetchData = async () => {
             try {

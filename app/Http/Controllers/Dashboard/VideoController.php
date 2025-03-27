@@ -69,7 +69,12 @@ class VideoController extends Controller
 
         if ($request->file('video')) {
             $videoName = 'videos/' . $videoSlug . '.mp4';
-            $request->video->move(public_path('storage/videos'), $videoName);
+            // Create directory if it doesn't exist
+            $videoDirectory = public_path('storage/videos');
+            if (!file_exists($videoDirectory)) {
+                mkdir($videoDirectory, 0755, true);
+            }
+            $request->video->move($videoDirectory, $videoSlug . '.mp4');
             if ($package == Package::PROMOTED) {
                 $package = Package::PREMIUM;
             } else {
@@ -80,6 +85,12 @@ class VideoController extends Controller
         }
 
         if ($request->file('thumbnail')) {
+            // Create thumbnail directories
+            $thumbnailBaseDir = public_path('storage/videos/' . $videoSlug);
+            if (!file_exists($thumbnailBaseDir)) {
+                mkdir($thumbnailBaseDir, 0755, true);
+            }
+
             $thumbnail = $video->generateImage($request->file('thumbnail'), $videoSlug);
         } else {
             $thumbnail = $request->thumbnail;

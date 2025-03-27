@@ -15,7 +15,7 @@ const NormalLayout = () => {
                 const res = await axios.get("Main/primary");
 
                 dispatch({ type: "SET_USER", payload: res.data?.user });
-                dispatch({ type: "SET_LOCATION", payload: res.data?.location });
+                dispatch({ type: "SET_LOCATION", payload: res.data?.locations });
                 dispatch({ type: "SET_SETTINGS", payload: res.data?.settings });
                 dispatch({
                     type: "SET_STATES",

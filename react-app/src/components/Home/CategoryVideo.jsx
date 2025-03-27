@@ -9,6 +9,7 @@ import { imageUrl } from "../../helper";
 import moment from "moment";
 import HoverPlayYouTube from "../Common/HoverPlayYoutube";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { usePrimary } from "../../context/PrimaryContext";
 
 const CategoryVideo = () => {
     const navigate = useNavigate();
@@ -16,30 +17,37 @@ const CategoryVideo = () => {
     const [page, setPage] = useState(1);
     const [hasMore, setHasMore] = useState(true);
     const [total, setTotal] = useState(0);
+    const { state } = usePrimary();
 
-
+    console.log(state.selectedLocation.value, "selectedLocation*****************");
+    console.log(catVideos, "catVideos*****************");
     const fetchCategoryVideos = async (pageNum) => {
         try {
             const response = await axios.get("Main/getCategoryVideos",{
-                params: {page: pageNum}
+                params: {
+                    page: pageNum,
+                    location_id: state?.selectedLocation?.value ?? '',
+                }
             });
 
             if (pageNum === 1) {
-                setCatVideos(response.data.data);
-            } else {
-                setCatVideos((prevVideos) => [...prevVideos, ...response.data.data]);
+                setCatVideos(response?.data?.data);
+            } else if(response?.data?.data){
+                setCatVideos((prevVideos) => [...prevVideos,  ...response.data.data]);
             }
             setTotal(response.data.total);
             setHasMore(response.data.current_page < response.data.last_page);
 
         } catch (error) {
-            toast.error("Error fetching categories & videos");
+            setHasMore(false);
+          console.log(error);
+        //   toast.error(error.response?.data?.message || "An error occurred");
         }
     };
 
     useEffect(() => {
-        fetchCategoryVideos();
-    }, []);
+        fetchCategoryVideos(1);
+    }, [state.selectedLocation.value]);
 
     const fetchNextData = async () => {
         const nextPage = page + 1;
@@ -58,10 +66,11 @@ const CategoryVideo = () => {
 
     return (
         <section className="max-w-[1167px] mx-auto px-4 mt-8 md:mt-20 pb-[64px]">
-            {catVideos.length > 0 && (
+            {catVideos.length > 0 ?  (
                 <div className="flex flex-col gap-5 mx-auto">
                     <InfiniteScroll
                         dataLength={catVideos.length}
+
                         next={fetchNextData}
                         hasMore={hasMore}
                         loader={Array(4)
@@ -97,7 +106,9 @@ const CategoryVideo = () => {
                                     </Link>
                                 </div>
                                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-[14px] mt-[16px]">
-                                    {item?.paginated_videos?.data?.map((video) => {
+                                    { item?.paginated_videos?.data?.length > 0 ? (
+
+                                    item?.paginated_videos?.data?.map((video) => {
                                         return (
                                             <div className="" key={video?.id}>
                                                 <div className="flex flex-col max-w-lg md:min-h-[238px] space-y-6 overflow-hidden rounded-lg pb-2 mx-auto">
@@ -141,12 +152,21 @@ const CategoryVideo = () => {
                                                 </div>
                                             </div>
                                         );
-                                    })}
+                                    })):
+                                    (
+                                        <div className="flex flex-1 items-center justify-center w-full">
+                                            <h5 className="text-gray-500 text-2xl">No videos found</h5>
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                         );
                     })}
                     </InfiniteScroll>
+                </div>
+            ):(
+                <div className="flex flex-1 items-center justify-center h-32 w-full">
+                    <h1 className="text-gray-500 text-5xl">No Category found</h1>
                 </div>
             )}
         </section>

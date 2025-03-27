@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Intervention\Image\Drivers\Gd\Driver;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\Log;
 
 class Video extends Model
 {
@@ -41,6 +42,8 @@ class Video extends Model
         $related = $request->get("related");
         $location = $request->get("location");
 
+        Log::info($request->all());
+
         $query = self::published()->withCount('views');
 
         if ($order == 'popular') {
@@ -51,6 +54,7 @@ class Video extends Model
 
         if ($location) {
             $locationData = MainController::resolveLocation($request);
+            // return $locationData;
             if (isset($locationData->city)) {
                 $query->where('location_id', $locationData->city);
                 if (isset($locationData->state)) {

@@ -42,7 +42,12 @@ const VideoUploadForm = ({ videoId, mode = 'user' }) => {
         categories: [],
         locations: [],
         cities: []
+
+
     });
+
+
+    console.log(formState);
 
     const fetchVideoAndFormData = useCallback(async () => {
         try {
@@ -145,7 +150,7 @@ const VideoUploadForm = ({ videoId, mode = 'user' }) => {
         setFormState(prev => ({ ...prev, isPromoted: !prev.isPromoted, videoInfo: { ...prev.videoInfo, promoted: !prev.isPromoted } }));
     }, []);
 
-    const handleThumbnailChange = useCallback((e) => {
+    const handleThumbnailChange = useCallback((e ) => {
         setFormState(prev => ({ ...prev, thumbnail: e }));
     }, []);
 

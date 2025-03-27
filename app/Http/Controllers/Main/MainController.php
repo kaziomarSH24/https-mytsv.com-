@@ -14,6 +14,7 @@ use App\Models\Interaction;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 
@@ -141,11 +142,20 @@ class MainController extends Controller
     public function getCategoryVideos(Request $request)
     {
         $videoPage = request('video_page', 1);
+        $location_id = request('location_id', null);
+
+        // return $this->resolveLocation($request);
+
+        Log::info("cat vedio",$request->all());
 
         $categories = Category::has('videos')->paginate(3);
 
-        $categories->getCollection()->transform(function ($category) use ($videoPage) {
-            $category->paginated_videos = $category->videos()->with('user')->paginate(8, ['*'], 'video_page', $videoPage);
+        $categories->getCollection()->transform(function ($category) use ($videoPage, $location_id) {
+            $query = $category->videos()->with('user');
+            if ($location_id) {
+            $query->where('location_id', $location_id);
+            }
+            $category->paginated_videos = $query->paginate(8, ['*'], 'video_page', $videoPage);
             return $category;
         });
 
@@ -172,6 +182,8 @@ class MainController extends Controller
             ], 400);
         }
 
+
+
         $category = Category::find($request->category_id);
 
         if (!$category) {
@@ -180,8 +192,20 @@ class MainController extends Controller
                 'message' => 'Category not found'
             ], 404);
         }
+        $location_id = request('location_id', null);
 
-        $videos = $category->videos()->with('user')->paginate(12);
+        $query = $category->videos()->with('user');
+        if ($location_id) {
+            $query->where('location_id', $location_id);
+        }
+        $videos = $query->paginate(12);
+
+        if ($videos->isEmpty()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'No videos found'
+            ], 200);
+        }
 
         return response()->json($videos);
     }

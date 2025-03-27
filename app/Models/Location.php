@@ -12,11 +12,11 @@ class Location extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = ['name'];
-    
+
     public static function location($ip)
     {
         $response = Http::get("http://ip-api.com/json/{$ip}")->json();
-
+        // return $response;
         if ($response['status'] == 'success') {
             $location = Location::where('title', 'like', $response['city'])->first();
             if (!$location) {

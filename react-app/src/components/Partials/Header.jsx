@@ -26,7 +26,7 @@ import { usePrimary } from "../../context/PrimaryContext";
 import { Navigation, Pagination, Scrollbar, A11y } from "swiper/modules";
 
 const Header = ({ states, categories, locator }) => {
-    const { query } = useParams();
+    const { query,id } = useParams();
     const navigate = useNavigate();
     const url = useLocation();
     const { dispatch } = usePrimary();
@@ -47,13 +47,16 @@ const Header = ({ states, categories, locator }) => {
     const notificationRef = useDetectClickOutside({ onTriggered: () => setNotificationDropdown(false) });
     const locationRef = useRef(null);
     const swiperRef = useRef(null);
+    //location contextApi
+
 
     const getUser = async () => {
         const user = await axios.get("Auth/Me");
         // dispatch({ type: "SET_USER", payload: user.data });
         setUser(user.data);
     };
-
+    // console.log(selectedCity, "Selected City");
+    // console.log(citiesData, "Cities Data");
     const getLocation = async () => {
         const location = await axios.get("Main/getLocation");
         setLocation(location.data);
@@ -89,6 +92,12 @@ const Header = ({ states, categories, locator }) => {
             setLocationModal(false);
         }
     };
+    //clear select value
+    const clearValue = () =>{
+        setSelectedState(null);
+        setSelectedCity(null);
+        dispatch({ type: "SET_SELECTED_LOCATION", payload: '' });
+    }
 
     const renderCategoryLinks = () => {
         if (!Array.isArray(categories) || !categories.length) {
@@ -103,7 +112,7 @@ const Header = ({ states, categories, locator }) => {
 
         return (
             <>
-                <div className={`px-3 py-2 rounded-lg border font-Roboto text-[14px] ${!query && "bg-gray-600 text-white"}`}>
+                <div className={`px-3 py-2 rounded-lg border font-Roboto text-[14px] ${!id && "bg-gray-600 text-white"}`}>
                     <Link to={`/`}>All</Link>
                 </div>
 
@@ -119,8 +128,8 @@ const Header = ({ states, categories, locator }) => {
                 >
                     {categories.map((category) => (
                         <SwiperSlide key={category.id} style={{ width: "auto" }}>
-                            <div className={`px-3 py-2 rounded-lg border font-Roboto text-[14px] ${query === `${category.title}` ? "bg-gray-600 text-white" : ""}`}>
-                                <Link to={`/search/${category.title}`}>{category.title}</Link>
+                            <div className={`px-3 py-2 rounded-lg border font-Roboto text-[14px] ${id === `${category.id}` ? "bg-gray-600 text-white" : ""}`}>
+                                <Link to={`/search/${category.id}`}>{category.title}</Link>
                             </div>
                         </SwiperSlide>
                     ))}
@@ -180,6 +189,7 @@ const Header = ({ states, categories, locator }) => {
 
     const cityChange = (selectedOption) => {
         setSelectedCity(selectedOption);
+
     };
 
     const handleSaveLocation = async () => {
@@ -188,6 +198,7 @@ const Header = ({ states, categories, locator }) => {
                 state: selectedState?.value,
                 city: selectedCity?.value,
             });
+            dispatch({ type: "SET_SELECTED_LOCATION", payload: selectedCity });
             setLocationModal(false);
         } catch (error) {
             console.error("Failed to save location:", error);
@@ -276,9 +287,14 @@ const Header = ({ states, categories, locator }) => {
                                 <button className="bg-white border rounded-xl px-8 py-2" onClick={() => setLocationModal(false)}>
                                     Close
                                 </button>
+                                <div>
+                                <button className="bg-white border rounded-xl px-8 py-2 mr-3" onClick={() => clearValue()}>
+                                    Clear
+                                </button>
                                 <button className="bg-primary text-white rounded-xl px-8 py-2" onClick={handleSaveLocation}>
                                     Save
                                 </button>
+                                </div>
                             </div>
                         </div>
                     </div>

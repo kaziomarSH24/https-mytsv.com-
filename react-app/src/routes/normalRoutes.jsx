@@ -15,9 +15,13 @@ export const normalRoutes = [
         element: <ViewDetails />,
     },
     {
-        path: "/Search/:query?",
+        path: "/Search/:id",
         element: <Search />,
     },
+    // {
+    //     path: "/Search/:query?",
+    //     element: <Search />,
+    // },
     {
         path: "/Profile/:id?",
         element: <Profile />,

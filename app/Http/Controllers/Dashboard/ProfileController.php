@@ -7,17 +7,29 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class ProfileController extends Controller
 {
     public function Settings(Request $request)
     {
         $userId = Auth::user()->id;
-        $request->validate([
+        // return $userId;
+        // $request->validate([
+        //     'name' => 'required',
+        //     'full_name' => 'required',
+        //     'email' => 'required|email|unique:users,email,' . $userId,
+        // ]);
+
+        $validator = Validator::make($request->all(), [
             'name' => 'required',
             'full_name' => 'required',
             'email' => 'required|email|unique:users,email,' . $userId,
         ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()]);
+        }
 
         $user = User::find($userId);
 

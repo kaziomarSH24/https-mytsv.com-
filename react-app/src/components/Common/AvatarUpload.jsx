@@ -8,9 +8,9 @@ const AvatarUpload = ({ user, onAvatarChange, onAvatarDelete }) => {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        setPreviewUrl(user?.avatar?.default)
+        setPreviewUrl(user.avatar?.default)
     }, [user]);
-
+    console.log(user, "user");
     const handleFileChange = async (event) => {
         const file = event.target.files?.[0];
         if (!file) return;
@@ -39,7 +39,7 @@ const AvatarUpload = ({ user, onAvatarChange, onAvatarDelete }) => {
             await new Promise(resolve => setTimeout(resolve, 1000));
             await onAvatarChange(file);
         } catch (err) {
-            setError(err);
+            setError('Failed to upload image. Please try again.');
         } finally {
             setIsUploading(false);
         }
@@ -56,7 +56,6 @@ const AvatarUpload = ({ user, onAvatarChange, onAvatarDelete }) => {
             setIsUploading(false);
         }
     };
-
     return (
         <>
             <div className="flex flex-col md:flex-row justify-between items-center gap-8">
@@ -68,7 +67,7 @@ const AvatarUpload = ({ user, onAvatarChange, onAvatarDelete }) => {
                             }`}>
                             {previewUrl ? (
                                 <img
-                                    src={imageUrl(previewUrl)}
+                                    src={previewUrl}
                                     alt="User Avatar"
                                     className="w-full h-full object-cover"
                                 />

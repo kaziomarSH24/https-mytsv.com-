@@ -8,6 +8,7 @@ const initialState = {
     settings: [],
     categories: [],
     user: {},
+    selectedLocation: {},
 };
 
 // Define the reducer function
@@ -25,6 +26,9 @@ const reducer = (state, action) => {
             return { ...state, categories: action.payload };
         case "SET_USER":
             return { ...state, user: action.payload };
+        case "SET_SELECTED_LOCATION":
+            return { ...state, selectedLocation: action.payload
+        };
         default:
             return state;
     }
