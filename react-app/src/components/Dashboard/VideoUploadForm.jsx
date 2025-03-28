@@ -6,9 +6,10 @@ import { MdOutlineFileUpload } from "react-icons/md";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import ReactPlayer from 'react-player';
 import NumberFormatter from '../Common/FormatNumber';
+import { imageUrl } from '../../helper';
 
 const PRICE_OPTIONS = [1, 2, 3];
 const ALLOWED_VIDEO_TYPE = "video/";
@@ -31,6 +32,7 @@ const selectStyles = {
 
 const VideoUploadForm = ({ videoId, mode = 'user' }) => {
     const navigate = useNavigate();
+    const {id} = useParams();
     const [formState, setFormState] = useState({
         videoInfo: null,
         thumbnail: null,
@@ -47,7 +49,7 @@ const VideoUploadForm = ({ videoId, mode = 'user' }) => {
     });
 
 
-    console.log(formState);
+    console.log(id, "id*****************");
 
     const fetchVideoAndFormData = useCallback(async () => {
         try {
@@ -177,6 +179,9 @@ const VideoUploadForm = ({ videoId, mode = 'user' }) => {
                 payload.append('video', formState.selectedFile);
             } else {
                 payload.append('video', formState.videoInfo.video);
+            }
+            if(id){
+                payload.append('id', id);
             }
 
             const res = await axios.post('/Dashboard/Videos', payload, {
@@ -466,7 +471,7 @@ const VideoUploadForm = ({ videoId, mode = 'user' }) => {
                                 <img
                                     src={formState.thumbnail?.target?.files[0]
                                         ? URL.createObjectURL(formState.thumbnail.target.files[0])
-                                        : formState.videoInfo.thumbnail}
+                                        : imageUrl(formState.videoInfo?.thumbnail?.default)}
                                     alt="Thumbnail"
                                     className="w-full h-full object-cover rounded-xl hover:opacity-50 cursor-pointer transition-all max-h-80"
                                 />

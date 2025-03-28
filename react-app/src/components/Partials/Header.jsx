@@ -97,6 +97,7 @@ const Header = ({ states, categories, locator }) => {
         setSelectedState(null);
         setSelectedCity(null);
         dispatch({ type: "SET_SELECTED_LOCATION", payload: '' });
+        setLocationModal(false);
     }
 
     const renderCategoryLinks = () => {

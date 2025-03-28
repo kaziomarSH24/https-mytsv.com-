@@ -165,6 +165,14 @@ const Video = () => {
             toast.error("Sharing not supported in this browser");
         }
     };
+
+    const fetchNextData = async () => {
+        const nextPage = page + 1;
+        setPage(nextPage);
+        await fetchRelatedVideos(nextPage);
+    };
+
+
     return (
         <>
             {/* <div className="bg-gray-800 sm:pt-10 sm:pb-20 pattern">
@@ -331,7 +339,7 @@ const Video = () => {
 
                         <InfiniteScroll
                             dataLength={relatedVideos.length}
-                            next={() => setPage((prev) => prev + 1)}
+                            next={fetchNextData}
                             hasMore={hasMore}
                             className=""
                             loader={

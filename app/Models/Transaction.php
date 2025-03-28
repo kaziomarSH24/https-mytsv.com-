@@ -50,7 +50,7 @@ class Transaction extends Model
     $this->create([
         'status' => 'created',
         'video_id' => $videoId,
-        'price' => count($price_ids) > 1 ? 199 : 99,
+        'price' => count($price_ids) > 1 ? (int) 198 : (int) 99,
         'transaction_id' => $checkoutSession->id,
     ]);
 

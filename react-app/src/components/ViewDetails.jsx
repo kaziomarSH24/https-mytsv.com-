@@ -17,6 +17,7 @@ const ViewDetails = ({ catId }) => {
     const [hasMore, setHasMore] = useState(true);
     const [total, setTotal] = useState(0);
     const { state } = usePrimary();
+    const [loading, setLoading] = useState(true);
 
     console.log(state.selectedLocation.value, "selectedLocation*****************");
 
@@ -41,12 +42,13 @@ const ViewDetails = ({ catId }) => {
         } catch (error) {
             setHasMore(false);
             console.log(error);
-
         }
     };
 
     useEffect(() => {
-        fetchVideos(1);
+        fetchVideos(1).then(() => {
+            setLoading(false);
+        });
     }, [id, state.selectedLocation.value]);
 
     const fetchNextData = async () => {
@@ -64,23 +66,34 @@ const ViewDetails = ({ catId }) => {
             </div> */}
             <div className="max-w-[1167px] mx-auto mt-10 px-4 pb-[40px] lg:pb-[64px]">
                 {/* all data show */}
-                {videos.length > 0 ? (
+                {loading ? (
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-[14px] mt-[16px]">
+                        {Array(4)
+                            .fill()
+                            .map((_, key) => (
+                                <div className="flex flex-col gap-2" key={key}>
+                                    <Skeleton height={200} borderRadius={15} className="rounded-2xl" />
+                                    <Skeleton height={40} borderRadius={15} className="rounded-2xl" />
+                                </div>
+                            ))}
+                    </div>
+                ) : videos.length > 0 ? (
                     <InfiniteScroll
-                    dataLength={videos?.length}
-                    next={fetchNextData}
-                    hasMore={hasMore}
-                    loader={Array(4)
-                        .fill()
-                        .map((_, key) => (
-                            <div className="flex flex-col gap-2" key={key}>
-                                <Skeleton height={200} borderRadius={15} className="rounded-2xl" />
-                                <Skeleton height={40} borderRadius={15} className="rounded-2xl" />
-                            </div>
-                        ))}
-                    refreshFunction={() => fetchVideos(1)}
-                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-[14px] mt-[16px]"
-                >
-                    {videos.map((video) => (
+                        dataLength={videos?.length}
+                        next={fetchNextData}
+                        hasMore={hasMore}
+                        loader={Array(4)
+                            .fill()
+                            .map((_, key) => (
+                                <div className="flex flex-col gap-2" key={key}>
+                                    <Skeleton height={200} borderRadius={15} className="rounded-2xl" />
+                                    <Skeleton height={40} borderRadius={15} className="rounded-2xl" />
+                                </div>
+                            ))}
+                        refreshFunction={() => fetchVideos(1)}
+                        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-[14px] mt-[16px]"
+                    >
+                        {videos.map((video) => (
                             <Link to={video.slug} key={video.id}>
                                 <div className="">
                                     <div className="">
@@ -126,14 +139,13 @@ const ViewDetails = ({ catId }) => {
                                     </div>
                                 </div>
                             </Link>
-                        ))
-                    }
-                </InfiniteScroll>
+                        ))}
+                    </InfiniteScroll>
                 ) : (
                     <div className="flex flex-1 items-center justify-center h-32 w-full">
-                        <h1 className="text-gray-500 text-5xl">No videos found</h1>
+                        <h1 className="text-gray-200 text-5xl">No videos found</h1>
                     </div>
-                    )}
+                )}
             </div>
         </>
     );

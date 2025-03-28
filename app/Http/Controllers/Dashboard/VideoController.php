@@ -12,6 +12,7 @@ use App\Enums\Video\Package;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class VideoController extends Controller
 {
@@ -45,11 +46,14 @@ class VideoController extends Controller
         $request->validate([
             'title' => 'required',
             'description' => 'required',
-            'price' => 'required|integer|max:3',
+            'price' => 'required|integer',
             'video' => 'required',
             'thumbnail' => 'required',
             'category' => 'required',
         ]);
+
+
+        Log::info("Upload video",$request->all());
 
         $status = Status::WAITING;
         $package = Package::FREE;

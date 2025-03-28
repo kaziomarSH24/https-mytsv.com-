@@ -77,3 +77,4 @@ Route::group(['middleware' => 'auth:api', 'prefix' => 'Dashboard'], function ($r
         Route::post('Settings', [SettingController::class, 'updateSetting']);
     });
 });
+Route::apiResource('check/Videos', VideoController::class);

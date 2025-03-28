@@ -55,6 +55,7 @@ const Upload = () => {
             toast.success("Video uploaded successfully!");
             navigate("/User/Videos");
         } catch (error) {
+            console.error(error, "Error uploading video");
             toast.error(error.response?.data?.message || "Failed to upload video");
         } finally {
             setIsLoading(false);
