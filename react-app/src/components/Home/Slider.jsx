@@ -43,6 +43,8 @@ console.log(sliderVideos, "sliderVideos 33");
                     activeClass: "pagination-active", //active class add
                 }}
                 loop={true}
+                speed={1000}
+                effect="slide"
                 modules={[Autoplay, Pagination]}
                 className="max-w-[1167px] mx-auto"
             >
@@ -53,13 +55,13 @@ console.log(sliderVideos, "sliderVideos 33");
                                 <div className="container relative z-10">
                                     <div className="flex items-center ">
                                         <div className="lg:ml-10 max-w-[550px] text-[#FFFFFF] pl-8 py-8">
-                                            <h1 className="font-Roboto text-base md:text-2xl">
+                                            <h1 className="font-Roboto text-base md:text-2xl hidden sm:block">
                                                 {video?.category?.title} <span className="bg-primary text-[#FFFFFF] px-2 py-1 rounded ml-[8px]">Ads</span>
                                             </h1>
 
-                                            <p className="font-Poppins font-medium py-[16px] text-xl lg:text-4xl">{video.title}</p>
+                                            <p className="font-Poppins font-medium py-[16px] hidden sm:text-xl sm:block lg:text-4xl">{video.title.length > 50 ? `${video.title.substring(0, 50)}...` : video.title}</p>
                                         </div>
-                                        <div className="absolute bottom-[50%] right-[20%] transform translate-y-[50%]">
+                                        <div className="absolute left-[50%] sm:left-0 sm:right-[20%] transform translate-x-[-50%]">
                                             <Link to={`/${video?.slug}`}>
                                                 <img src={"/assets/img/PlayIcon.webp"} alt="Play Icon" className="w-full inline md:max-w-[100px] max-w-[45px]" />
                                             </Link>
