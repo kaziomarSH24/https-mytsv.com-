@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\Video\Package;
 use App\Enums\Video\Status;
 use App\Http\Controllers\Main\MainController;
 use Illuminate\Http\Request;
@@ -34,6 +35,12 @@ class Video extends Model
             });
         });
     }
+
+    public function scopePromotional($query)
+{
+    return $query->whereIn('package', [Package::PROMOTED, Package::PREMIUM])
+                 ->where('created_at', '>=', now()->subMonth());
+}
 
     public static function getVideos(Request $request, $params = [])
     {

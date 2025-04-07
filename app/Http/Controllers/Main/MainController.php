@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Main;
 
+use App\Enums\Video\Package;
 use App\Models\Blog;
 use App\Models\User;
 use App\Models\View;
@@ -13,6 +14,7 @@ use App\Models\Location;
 use App\Models\Interaction;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
@@ -131,6 +133,7 @@ class MainController extends Controller
         $blogs = Blog::latest()->paginate(9);
         return response()->json($blogs);
     }
+
     public function getBlog($slug)
     {
         $blog = Blog::where('slug', $slug)->first();
@@ -140,34 +143,26 @@ class MainController extends Controller
 
     //get all videos with category
     public function getCategoryVideos(Request $request)
-    {
-        $videoPage = request('video_page', 1);
-        $location_id = request('location_id', null);
+{
+    $videoPage = request('video_page', 1);
+    $location_id = request('location_id', null);
 
-        // return $this->resolveLocation($request);
+    $categories = Category::has('videos')->paginate(3);
 
-        Log::info("cat vedio",$request->all());
+    $categories->getCollection()->transform(function ($category) use ($videoPage, $location_id) {
+        $category->paginated_videos = $this->getSortedPaginatedVideos($category, $location_id, $videoPage, 8);
+        return $category;
+    });
 
-        $categories = Category::has('videos')->paginate(3);
-
-        $categories->getCollection()->transform(function ($category) use ($videoPage, $location_id) {
-            $query = $category->videos()->with('user');
-            if ($location_id) {
-            $query->where('location_id', $location_id);
-            }
-            $category->paginated_videos = $query->paginate(8, ['*'], 'video_page', $videoPage);
-            return $category;
-        });
-
-        if ($categories->isEmpty()) {
-            return response()->json([
-                'success' => false,
-                'message' => 'No categories found'
-            ], 404);
-        }
-
-        return response()->json($categories);
+    if ($categories->isEmpty()) {
+        return response()->json([
+            'success' => false,
+            'message' => 'No categories found'
+        ], 404);
     }
+
+    return response()->json($categories);
+}
 
     //get category videos by category id
     public function getCategoryVideosById(Request $request)
@@ -175,6 +170,7 @@ class MainController extends Controller
         $validator = Validator::make($request->all(), [
             'category_id' => 'required|integer|exists:categories,id'
         ]);
+
         if($validator->fails()) {
             return response()->json([
                 'success' => false,
@@ -182,23 +178,11 @@ class MainController extends Controller
             ], 400);
         }
 
-
-
         $category = Category::find($request->category_id);
+        $location_id = $request->location_id;
+        $page = $request->get('page', 1);
 
-        if (!$category) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Category not found'
-            ], 404);
-        }
-        $location_id = request('location_id', null);
-
-        $query = $category->videos()->with('user');
-        if ($location_id) {
-            $query->where('location_id', $location_id);
-        }
-        $videos = $query->paginate(12);
+        $videos = $this->getSortedPaginatedVideos($category, $location_id, $page, 12);
 
         if ($videos->isEmpty()) {
             return response()->json([
@@ -209,4 +193,65 @@ class MainController extends Controller
 
         return response()->json($videos);
     }
+
+
+    public function getPromotionalVideos(Request $request)
+{
+    // return "hello";
+    $location_id = $request->input('location_id');
+
+    $query = Video::with('user', 'category')
+        ->Promotional();
+
+    if ($location_id) {
+        $query->where('location_id', $location_id);
+    }
+
+    $videos = $query->orderBy('package', 'desc')->paginate(12);
+
+    if ($videos->isEmpty()) {
+        $videos = null;
+    }
+
+    return response()->json([
+        'success' => true,
+        'data' => $videos
+    ]);
+}
+
+
+private function getSortedPaginatedVideos($category, $location_id = null, $page = 1, $perPage = 12)
+{
+    $query = $category->videos()->with('user');
+
+    if ($location_id) {
+        $query->where('location_id', $location_id);
+    }
+
+    $oneMonthAgo = now()->subMonth();
+
+    $topVideos = (clone $query)
+        ->Promotional()
+        ->orderBy('created_at', 'desc')
+        ->get();
+
+    $otherVideos = (clone $query)
+        ->where(function ($q) use ($oneMonthAgo) {
+            $q->whereNotIn('package', [Package::PROMOTED, Package::PREMIUM])
+              ->orWhere('created_at', '<', $oneMonthAgo);
+        })
+        ->inRandomOrder()
+        ->get();
+
+    $allVideos = $topVideos->concat($otherVideos);
+
+    return new \Illuminate\Pagination\LengthAwarePaginator(
+        $allVideos->forPage($page, $perPage)->values(),
+        $allVideos->count(),
+        $perPage,
+        $page,
+        ['path' => request()->url(), 'query' => request()->query()]
+    );
+}
+
 }

@@ -53,7 +53,7 @@ class VideoController extends Controller
         ]);
 
 
-        Log::info("Upload video",$request->all());
+        // Log::info("Upload video",$request->all());
 
         $status = Status::WAITING;
         $package = Package::FREE;
@@ -86,6 +86,8 @@ class VideoController extends Controller
             }
         } else {
             $videoName = $request->video;
+            //if video is youtube link it already published
+            $status = Status::PUBLISHED;
         }
 
         if ($request->file('thumbnail')) {

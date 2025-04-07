@@ -51,6 +51,8 @@ Route::prefix('Main')->group(function () {
     //get category videos
     Route::get('/getCategoryVideos', [MainController::class, 'getCategoryVideos']);
     Route::get('/category-video', [MainController::class, 'getCategoryVideosById']);
+    // get promotional videos
+    Route::get('/promoted-videos', [MainController::class, 'getPromotionalVideos']);
 });
 
 Route::prefix('Video')->group(function () {
@@ -77,4 +79,5 @@ Route::group(['middleware' => 'auth:api', 'prefix' => 'Dashboard'], function ($r
         Route::post('Settings', [SettingController::class, 'updateSetting']);
     });
 });
-Route::apiResource('check/Videos', VideoController::class);
+
+Route::get('check/Video', [MainController::class, 'getCategoryVideos']);

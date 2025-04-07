@@ -11,7 +11,7 @@ export const normalRoutes = [
         element: <Home />,
     },
     {
-        path: "/view-all/:id",
+        path: "/view-all/:prms",
         element: <ViewDetails />,
     },
     {

@@ -33,3 +33,18 @@ export const getYouTubeVideoId = (url) => {
     const match = url.match(regExp);
     return match ? match[1] : null;
 };
+
+
+export const shouldShowBadge = (video) => {
+    if (!video?.created_at || !video?.package) return false;
+
+    const createdAt = new Date(video.created_at);
+    const now = new Date();
+    const oneMonthAgo = new Date();
+    oneMonthAgo.setMonth(now.getMonth() - 1);
+
+    const isWithinOneMonth = createdAt >= oneMonthAgo;
+    const isPromotedOrPremium = video.package === 3 || video.package === 4;
+
+    return isWithinOneMonth && isPromotedOrPremium;
+};

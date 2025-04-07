@@ -21,8 +21,11 @@ class Transaction extends Model
 {
     $price_ids = [];
 
+    // if ($package == Package::PROMOTED || $package == Package::PREMIUM) {
+    //     $price_ids[] = 'price_1Q4iXcB9uNXBCzh8d6fGt3yg';
+    // }
     if ($package == Package::PROMOTED || $package == Package::PREMIUM) {
-        $price_ids[] = 'price_1Q4iXcB9uNXBCzh8d6fGt3yg';
+        $price_ids[] = 'price_1RB78CE3HCOEW1L0JSoGV2Vt';
     }
     // if ($package == Package::FILE || $package == Package::PREMIUM) {
     //     $price_ids[] = 'price_1Q4kseB9uNXBCzh8NqBXqFLK';

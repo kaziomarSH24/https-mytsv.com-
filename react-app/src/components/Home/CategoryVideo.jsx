@@ -11,8 +11,9 @@ import HoverPlayYouTube from "../Common/HoverPlayYoutube";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { usePrimary } from "../../context/PrimaryContext";
 import Skeleton from "react-loading-skeleton";
+import PromotionBadge from "../Common/PromotionBadge";
 
-const CategoryVideo = () => {
+const CategoryVideo = ({className}) => {
     const navigate = useNavigate();
     const [catVideos, setCatVideos] = useState([]);
     const [page, setPage] = useState(1);
@@ -60,7 +61,7 @@ const CategoryVideo = () => {
 
 
     return (
-        <section className="max-w-[1167px] mx-auto px-4 mt-8 md:mt-20 pb-[64px]">
+        <section className={className}>
             {loading ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-[14px] mt-[16px]">
                     {Array(4)
@@ -124,7 +125,7 @@ const CategoryVideo = () => {
                                                                                 </p>
                                                                             </div>
 
-                                                                            <div className="absolute top-0 right-0 z-30 m-2 px-4 py-1 rounded-md bg-[#999999] text-[12px] font-Roboto text-[#FFFF] opacity-0 group-hover:opacity-100 transition-opacity duration-300">Paid</div>
+                                                                            <PromotionBadge video={video} />
                                                                         </div>
                                                                         {/* <span className="absolute z-20 bottom-0 right-0 m-2 px-2 py-1 rounded-md bg-[#999999] text-[12px] font-Roboto text-[#333333]">17:08</span> */}
                                                                     </div>
