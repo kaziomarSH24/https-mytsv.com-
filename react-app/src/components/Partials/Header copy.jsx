@@ -88,7 +88,7 @@ const Headerco = ({ states, categories, locator }) => {
     };
 
     const renderCategoryLinks = () => {
-        if (!Array.isArray(categories) || !categories.length) {
+        if (!Array.isArray(categories) || !categories?.length) {
             return (
                 <div className="flex gap-x-8">
                     {[...Array(6)].map((_, idx) => (

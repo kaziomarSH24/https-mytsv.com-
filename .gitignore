@@ -4,6 +4,8 @@
 /public/hot
 /public/storage
 /storage/*.key
+storage_old
+public_old
 /vendor
 .env
 .env.backup
@@ -17,3 +19,4 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
+database.sql

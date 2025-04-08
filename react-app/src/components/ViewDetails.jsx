@@ -82,7 +82,7 @@ const ViewDetails = ({ catId }) => {
                             </div>
                         ))}
                 </div>
-            ) : videos.length > 0 ? (
+            ) : videos?.length > 0 ? (
                 <InfiniteScroll
                     dataLength={videos?.length}
                     next={fetchNextData}

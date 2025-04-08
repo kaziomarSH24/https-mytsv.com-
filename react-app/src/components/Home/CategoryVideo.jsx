@@ -73,10 +73,10 @@ const CategoryVideo = ({className}) => {
                             </div>
                         ))}
                 </div>
-            ) : catVideos.length > 0 ? (
+            ) : catVideos?.length > 0 ? (
                 <div className="flex flex-col gap-5 mx-auto">
                     <InfiniteScroll
-                        dataLength={catVideos.length}
+                        dataLength={catVideos?.length}
                         next={fetchNextData}
                         hasMore={hasMore}
                         loader={Array(4)
@@ -134,15 +134,15 @@ const CategoryVideo = ({className}) => {
                                                                 <div className="flex md:justify-between gap-4 md:gap-2 p-1">
                                                                     <img src={imageUrl(video.user.avatar.default)} alt="" className="w-[40px] h-[40px] object-cover rounded-full" />
                                                                     <div>
-                                                                        <h1 className="font-Roboto text-[14px] text-[#333333]">{video.title.length > 50 ? `${video.title.substring(0, 50)}...` : video.title}</h1>
-                                                                        <p className="font-Roboto text-[14px] text-[#666666]">{video.user?.name}</p>
+                                                                        <h1 className="font-Roboto text-[14px] text-[#333333]">{video?.title?.length > 50 ? `${video?.title.substring(0, 50)}...` : video?.title}</h1>
+                                                                        <p className="font-Roboto text-[14px] text-[#666666]">{video?.user?.name}</p>
                                                                         <div className="flex items-center gap-3">
                                                                             <p className="font-Roboto text-[12px] text-[#666666]">
-                                                                                <span>{video.views}</span> views
+                                                                                <span>{video?.views}</span> views
                                                                             </p>
                                                                             <span className="h-2 w-2 bg-[#999999] rounded-full"></span>
                                                                             <p className="font-Roboto text-[12px] text-[#666666]">
-                                                                                <span>{moment(video.created_at).fromNow()}</span>
+                                                                                <span>{moment(video?.created_at).fromNow()}</span>
                                                                             </p>
                                                                         </div>
                                                                     </div>

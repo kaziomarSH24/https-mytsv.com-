@@ -91,7 +91,7 @@ const Graph = ({ videoId }) => {
                     <option value="last6Months">Last 6 Months</option>
                 </select>
             </div>
-            {chartData.labels.length > 0 ? <Line options={options} data={chartData} /> : <div>No data available for the selected period.</div>}
+            {chartData?.labels?.length > 0 ? <Line options={options} data={chartData} /> : <div>No data available for the selected period.</div>}
         </div>
     );
 };

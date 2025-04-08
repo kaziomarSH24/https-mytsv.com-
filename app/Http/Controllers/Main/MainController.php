@@ -144,6 +144,7 @@ class MainController extends Controller
     //get all videos with category
     public function getCategoryVideos(Request $request)
 {
+    // return "hello";
     $videoPage = request('video_page', 1);
     $location_id = request('location_id', null);
 
