@@ -40,7 +40,7 @@ const ViewDetails = ({ catId }) => {
                         location_id: state?.selectedLocation?.value ?? "",
                     },
                 });
-                console.log(response, "$$$$$$$$$$$$$$");
+                // console.log(response, "$$$$$$$$$$$$$$");
             }
 
             if (pageNum === 1) {
