@@ -1,4 +1,4 @@
-const domain = 'http://localhost/api/';
+const domain = 'http://34.66.127.54/api/';
 
 export const storage = () => {
     const storage = domain.replace('api', 'storage/');
