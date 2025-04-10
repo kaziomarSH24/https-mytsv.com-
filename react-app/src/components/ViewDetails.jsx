@@ -61,7 +61,7 @@ const ViewDetails = ({ catId }) => {
         fetchVideos(1).then(() => {
             setLoading(false);
         });
-    }, [prms, state.selectedLocation.value]);
+    }, [prms, state.selectedLocation.value, catId]);
 
     const fetchNextData = async () => {
         const nextPage = page + 1;
