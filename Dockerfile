@@ -1,7 +1,8 @@
-# Laravel App এর জন্য Official PHP Image
+# Dockerfile for Laravel Application
+
 FROM php:8.2-fpm
 
-# System Dependencies ইনস্টল করা
+
 RUN apt-get update && apt-get install -y \
     libpng-dev \
     libjpeg-dev \

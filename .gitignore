@@ -3,7 +3,7 @@
 /public/assets
 /public/hot
 /public/storage
-/storage/*.key
+# /storage/*.key
 storage_old
 public_old
 /vendor
