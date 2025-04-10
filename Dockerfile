@@ -1,8 +1,7 @@
-# Dockerfile for Laravel Application
-
+# Base image PHP 8.2 FPM
 FROM php:8.2-fpm
 
-
+# Install required libraries for GD extension and other utilities
 RUN apt-get update && apt-get install -y \
     libpng-dev \
     libjpeg-dev \
@@ -12,29 +11,29 @@ RUN apt-get update && apt-get install -y \
     git \
     curl \
     vim \
-    && docker-php-ext-configure gd \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install gd pdo pdo_mysql
 
-# Node.js ইনস্টল করা
+# Install Node.js (version 18.x)
 RUN curl -sL https://deb.nodesource.com/setup_18.x | bash - \
     && apt-get install -y nodejs
 
-# Composer ইনস্টল করা
+# Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Laravel Working Directory সেট করা
+# Set Laravel working directory
 WORKDIR /var/www
 
-# Project Files কপি করা
+# Copy project files into the container
 COPY . .
 
-# Permission সেট করা
+# Set permissions for storage and cache folders
 RUN chown -R www-data:www-data /var/www \
     && chmod -R 775 /var/www/storage /var/www/bootstrap/cache
 
-# Laravel Cache Clear & Migrate
-# RUN php artisan cache:clear
-# RUN php artisan config:clear
-# RUN php artisan migrate --force
+# Expose the port 9000 (or whatever PHP-FPM runs on)
+EXPOSE 9000
 
+# Run PHP-FPM (or your entrypoint script)
 CMD ["php-fpm"]
+
