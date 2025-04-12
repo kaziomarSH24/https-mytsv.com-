@@ -12,12 +12,7 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    public $templateFile;
-
-    public function __construct()
-    {
-        $this->templateFile = public_path('index.html');
-    }
+    public $templateFile = 'index.html';
 
     public function firstLoader(Request $request)
     {

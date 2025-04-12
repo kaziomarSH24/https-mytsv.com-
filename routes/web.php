@@ -19,4 +19,9 @@ use App\Http\Controllers\Main\PaymentController;
 Route::get('/payment/success', [PaymentController::class, 'success'])->name('checkout-success');
 Route::get('/payment/cancel', [PaymentController::class, 'success'])->name('checkout-cancel');
 
+//create a test route
+Route::get('/test', function () {
+    return view('welcome'); 
+});
+
 Route::any('{catchall}', [Controller::class, 'firstLoader'])->where("catchall", ".*");
