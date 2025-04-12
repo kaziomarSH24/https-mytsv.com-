@@ -12,7 +12,12 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    public $templateFile = 'index.html';
+    public $templateFile;
+
+    public function __construct()
+    {
+        $this->templateFile = public_path('index.html');
+    }
 
     public function firstLoader(Request $request)
     {
@@ -30,7 +35,7 @@ class Controller extends BaseController
             <meta name="keywords" content="'.$keywords.'">
             <meta name="og:image" content="'.$image.'">
         ';
-        
+
         $template = str_replace('<placeholder_meta></placeholder_meta>', $placeHolders, $template);
         if (isset($title)) {
             $template = str_replace("<title></title>", "<title>{$title}</title>", $template);
