@@ -40,8 +40,8 @@ const Signin = () => {
             try {
                 const res = await axios.post("Auth/Login", { email, password });
                 localStorage.setItem("accessToken", res.data?.access_token);
-                console.log(res.data, "response login page");
-                dispatch({ type: "SET_USER", payload: res.data }); 
+                // console.log(res.data, "response login page");
+                dispatch({ type: "SET_USER", payload: res.data });
 
                 if (res.data.status !== "error") {
                     navigate("/");

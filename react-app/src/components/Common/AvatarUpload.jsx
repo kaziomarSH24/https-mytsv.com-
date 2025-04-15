@@ -10,7 +10,7 @@ const AvatarUpload = ({ user, onAvatarChange, onAvatarDelete }) => {
     useEffect(() => {
         setPreviewUrl(user.avatar?.default)
     }, [user]);
-    console.log(user, "user");
+
     const handleFileChange = async (event) => {
         const file = event.target.files?.[0];
         if (!file) return;

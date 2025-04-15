@@ -49,7 +49,8 @@ const VideoUploadForm = ({ videoId, mode = 'user' }) => {
     });
 
 
-    console.log(id, "id*****************");
+    console.log(videoId, "videoId");
+
 
     const fetchVideoAndFormData = useCallback(async () => {
         try {
@@ -193,7 +194,7 @@ const VideoUploadForm = ({ videoId, mode = 'user' }) => {
             if (res.data.url) {
                 window.open(res.data.url, "_self");
             } else {
-                navigate(mode == 'user' ? '/User/Videos' : '/Admin/Videos');
+                navigate(mode == 'admin' ? '/Admin/Videos' : '/User/Videos');
                 toast.success("Video uploaded successfully");
             }
 
@@ -203,12 +204,13 @@ const VideoUploadForm = ({ videoId, mode = 'user' }) => {
             setFormState(prev => ({ ...prev, isLoading: false }));
         }
     };
-
-    const isPayable = mode === 'create' && (formState.isPromoted || formState.uploadType === "file");
+    mode = videoId ? 'edit' : mode;
+    formState.uploadType = mode === 'edit' ? formState.uploadType = 'youtube' : formState.uploadType;
+    const isPayable = mode === 'create' && (formState.isPromoted || formState.uploadType === "file") || mode === 'edit' && formState.isPromoted;
     const price = (formState.isPromoted ? PROMOTION_PRICE : 0) + (formState.uploadType === "file" ? UPLOAD_PRICE : 0);
 
     const renderVideoUpload = () => {
-        if (formState.uploadType !== "file") {
+        if (formState.uploadType !== "file" && mode === 'create') {
             return (
                 <input
                     type="text"
@@ -221,7 +223,7 @@ const VideoUploadForm = ({ videoId, mode = 'user' }) => {
             );
         }
 
-        if (mode !== 'create' && formState.videoInfo?.video) {
+        if (mode === 'edit' && formState.videoInfo?.video) {
             return (
                 <div className="p-4 bg-gray-100 rounded-xl h-96">
                     <ReactPlayer url={formState.videoInfo.video} width="100%" height="100%" controls />
@@ -355,7 +357,7 @@ const VideoUploadForm = ({ videoId, mode = 'user' }) => {
                         {renderVideoUpload()}
                     </div>
 
-                    {mode === 'create' && (
+                    {/* {mode === 'create' && ( */}
                         <div className="flex items-center mb-5">
                             <input
                                 type="checkbox"
@@ -372,7 +374,7 @@ const VideoUploadForm = ({ videoId, mode = 'user' }) => {
                                 Promote for ${PROMOTION_PRICE}/month
                             </label>
                         </div>
-                    )}
+                    {/* )} */}
 
                     <div className="flex flex-col gap-4">
                         {mode !== 'create' && (
@@ -424,6 +426,7 @@ const VideoUploadForm = ({ videoId, mode = 'user' }) => {
                     <div className="flex flex-col gap-2">
                         <label className="text-sm font-medium text-gray-500">Category</label>
                         <Select
+                            required
                             options={formState.categories}
                             value={formState.categories.find(cat => cat.value === formState.videoInfo?.category_id)}
                             onChange={handleCategoryChange}
@@ -438,6 +441,7 @@ const VideoUploadForm = ({ videoId, mode = 'user' }) => {
                             {PRICE_OPTIONS.map((priceOption) => (
                                 <div key={priceOption}>
                                     <input
+                                        required
                                         type="radio"
                                         id={`price${priceOption}`}
                                         name="price"
@@ -540,7 +544,7 @@ const VideoUploadForm = ({ videoId, mode = 'user' }) => {
                             ? "Processing..."
                             : mode === 'create'
                                 ? (price > 0 ? "Pay Now" : "Publish Video")
-                                : "Update"
+                                : (price > 0 ? "Pay Now & Update" : "Update")
                         }
                     </button>
                 </div>

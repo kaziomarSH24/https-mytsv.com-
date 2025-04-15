@@ -37,11 +37,11 @@ const Signup = () => {
                     password: password,
                     password_confirmation: confirmPassword,
                 });
-                console.log(res, "res");
+                // console.log(res, "res");
 
                 if (res.data?.status === "success") {
                     localStorage.setItem("accessToken", res.data?.token);
-                    console.log(res.data,"35345345345345435634");
+                    // console.log(res.data,"35345345345345435634");
                     dispatch({ type: "SET_USER", payload: res.data?.user });
                     toast.success("Successfully registered");
                     navigate("/User/Settings");

@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
 
 class VideoController extends Controller
 {
@@ -43,14 +44,31 @@ class VideoController extends Controller
     public function store(Request $request)
     {
         $userId = Auth::user()->id;
-        $request->validate([
-            'title' => 'required',
+        // $request->validate([
+        //     'title' => 'required',
+        //     'description' => 'required',
+        //     'price' => 'required|integer',
+        //     'video' => 'required',
+        //     'thumbnail' => 'required',
+        //     'category' => 'required',
+        // ]);
+
+        $validation = Validator::make($request->all(), [
+            'title' => 'required|string|max:255',
             'description' => 'required',
             'price' => 'required|integer',
             'video' => 'required',
-            'thumbnail' => 'required',
+            'thumbnail' => $request->id ? 'nullable' : 'required|' ."image|mimes:jpeg,png,jpg,svg",
             'category' => 'required',
-        ]);
+            ]);
+
+        if ($validation->fails()) {
+            return response()->json([
+                'status' => 'error',
+                'errors' => $validation->errors()->first(),
+            ], 422);
+        }
+
 
 
         // Log::info("Upload video",$request->all());
@@ -114,7 +132,7 @@ class VideoController extends Controller
             'user_id' => $userId,
             'title' => $request->title,
             'price' => $request->price,
-            'thumbnail' => json_encode($thumbnail),
+            $request->id ? '' : 'thumbnail' => json_encode($thumbnail),
             'status' => $status,
             'package' => $package,
             'category_id' => $request->category,

@@ -69,20 +69,20 @@ console.log(userInfo?.avatar?.default, "userInfo");
                             <source media="(max-width: 1023px)" srcSet={imageUrl(userInfo?.avatar?.tablet)} />
                             <img
                                 src={imageUrl(userInfo?.avatar?.default)}
-                                className="w-40 h-40 rounded-full border-4 border-primary object-cover"
+                                className="w-31 h-31 sm:w-40 sm:h-40 rounded-full border-4 border-primary object-cover"
                                 alt={userInfo?.name}
                             />
                         </picture>
                         <div>
-                            <h1 className="text-3xl font-semibold">{userInfo?.name}</h1>
+                            <h1 className="text-2xl sm:text-3xl font-semibold">{userInfo?.name}</h1>
                             <p className="text-sm font-medium mb-2">Content Creator</p>
                             <div className="flex items-center gap-4 -ml-1.5">
                                 <Rating SVGclassName="inline" readonly={true} allowFraction={true} initialValue={userInfo?.rating} />
                             </div>
                         </div>
                     </div>
-                    <div className="flex gap-5 mt-8">
-                        <div className="w-[250px] h-fit rounded-[32px] bg-[#F2F2F2] px-8 py-6">
+                    <div className="flex flex-col sm:flex-row gap-5 mt-8">
+                        <div className="w-full sm:w-[250px] h-fit rounded-[32px] bg-[#F2F2F2] px-8 py-6">
                             <div className="mb-5">
                                 <h4 className="font-semibold text-2xl  mb-1">Language</h4>
                                 {userInfo?.additional_info?.languages?.map((language, index) => (
@@ -132,7 +132,7 @@ console.log(userInfo?.avatar?.default, "userInfo");
 
                             <div className="bg-[#F2F2F2] py-6 px-8 rounded-[32px] mb-6">
                                 <h2 className="text-2xl font-semibold mb-4">Popular</h2>
-                                <div className="grid grid-cols-3 gap-4">
+                                <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
                                     {videos.map((video, index) => (
                                         <VideoBox info={video} key={index} />
                                     ))}

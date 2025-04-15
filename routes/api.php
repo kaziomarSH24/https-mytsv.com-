@@ -82,6 +82,6 @@ Route::group(['middleware' => 'auth:api', 'prefix' => 'Dashboard'], function ($r
 
 
 // Route::get('check/Video', [MainController::class, 'getCategoryVideos']);
-Route::get('check/Video', function () {
-    return response()->json(['message' => 'ok']);
+Route::get('/test', function () {
+    return response()->json(['message' => 'API working!']);
 });

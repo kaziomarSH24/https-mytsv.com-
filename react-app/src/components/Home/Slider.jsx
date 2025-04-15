@@ -29,7 +29,6 @@ const Slider = () => {
     useEffect(() => {
         fetchPopular();
     }, []);
-console.log(sliderVideos, "sliderVideos 33");
     return (
         <>
             <Swiper

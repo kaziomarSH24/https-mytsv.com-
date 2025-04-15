@@ -135,7 +135,7 @@ const Video = () => {
     const Interaction = async (status) => {
         // console.log(data.interaction,"++ss++++++++++++++++++++++++");
         if (!state.user) return toast.error("Require Authorization");
-        console.log(state.user.avatar, "state.user");
+        // console.log(state.user.avatar, "state.user");
         if (status === data.interaction) return;
 
         const res = await axios.post("Video/Interaction", {

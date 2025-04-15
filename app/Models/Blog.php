@@ -27,17 +27,19 @@ class Blog extends Model
         ];
 
         $folder = 'blogs/' . $slug;
+        $timestamp = time();
         $publicPath = public_path("storage/{$folder}");
         if(!file_exists($publicPath)){
             mkdir($publicPath, 0755, true);
         }
-        $image->storeAs($folder, 'original.webp', 'public');
+        $image->storeAs($folder, "original-{$timestamp}.webp", 'public');
 
         $generatedImages = [];
         foreach ($sizes as $key => $dimensions) {
             $img = $manager->read($image);
             $img->cover($dimensions[0], $dimensions[1]);
-            $path = "{$folder}/{$key}.webp";
+            $filename = "{$key}-{$timestamp}.webp";
+            $path = "{$folder}/{$filename}";
             $img->toWebp()->save("storage/{$path}");
             $generatedImages[$key] = $path;
         }

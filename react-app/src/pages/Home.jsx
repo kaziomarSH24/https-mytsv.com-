@@ -7,11 +7,10 @@ import axios from "axios";
 const Home = () => {
     const [promotedVideos, setPromotedVideos] = useState([]);
     const [loading, setLoading] = useState(true);
-    console.log(promotedVideos, "090008098098");
     const fetchPromotedVideos = useCallback(async () => {
         try {
             const response = await axios.get("/Main/promoted-videos");
-            console.log(response?.data?.data?.data?.length, "response888888888");
+            // console.log(response?.data?.data?.data?.length, "response888888888");
             if (response?.data?.success && response?.data?.data?.data?.length > 0) {
                 setPromotedVideos(response.data.data.data);
             }

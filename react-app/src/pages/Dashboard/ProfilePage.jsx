@@ -47,7 +47,7 @@ const ProfilePage = () => {
                     <source media="(max-width: 1023px)" srcSet={imageUrl(userInfo?.avatar?.tablet)} />
                     <img
                         src={imageUrl(userInfo?.avatar?.default)}
-                        className="w-32 h-32 sm:w-40 sm:h-40 rounded-full border-4 border-primary object-cover"
+                        className="w-29 h-29 sm:w-40 sm:h-40 rounded-full border-4 border-primary object-cover"
                         alt={userInfo?.name}
                     />
                 </picture>

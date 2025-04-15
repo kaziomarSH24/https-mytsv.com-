@@ -58,6 +58,7 @@ const ViewDetails = ({ catId }) => {
     };
 
     useEffect(() => {
+        setLoading(true);
         fetchVideos(1).then(() => {
             setLoading(false);
         });

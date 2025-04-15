@@ -1,6 +1,9 @@
 # Base image PHP 8.2 FPM
 FROM php:8.2-fpm
 
+ARG user
+ARG uid
+
 # Install required libraries for GD extension and other utilities
 RUN apt-get update && apt-get install -y \
     libpng-dev \
@@ -17,7 +20,7 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-install gd pdo pdo_mysql
 
 # Install Node.js (version 18.x)
-RUN curl -sL https://deb.nodesource.com/setup_18.x | bash - \
+RUN curl -sL https://deb.nodesource.com/setup_22.x | bash - \
     && apt-get install -y nodejs
 
 # Install Composer
@@ -26,6 +29,7 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # Set Laravel working directory
 WORKDIR /var/www
 
+COPY package.json .
 # Copy project files into the container
 COPY . .
 
@@ -36,6 +40,13 @@ RUN chown -R www-data:www-data /var/www \
 # Expose the port 9000 (or whatever PHP-FPM runs on)
 EXPOSE 9000
 
+RUN useradd -G www-data,root -u $uid -d /home/$user $user
+RUN mkdir -p /home/$user/.composer && \
+    chown -R $user:$user /home/$user
+
+# Switch to the new user
+USER $user
+# Install npm dependencies
 # Run PHP-FPM (or your entrypoint script)
 CMD ["php-fpm"]
 

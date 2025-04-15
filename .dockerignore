@@ -6,3 +6,5 @@ storage_old
 public_old
 database.sql
 reach-app/usbek-website
+storage/logs
+# vendor

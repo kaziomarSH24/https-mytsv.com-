@@ -24,7 +24,7 @@ const SearchCopy = () => {
 
     const { query } = useParams();
     const { state } = usePrimary();
-    console.log(state.location.city, "state*****************");
+    // console.log(state.location.city, "state*****************");
     const getVideos = async () => {
         setLoading(true);
         const res = await axios.get("Main/getVideos", {

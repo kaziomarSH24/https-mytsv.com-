@@ -22,8 +22,7 @@ const CategoryVideo = ({className}) => {
     const { state } = usePrimary();
     const [loading, setLoading] = useState(true);
 
-    console.log(state.selectedLocation.value, "selectedLocation*****************");
-    console.log(catVideos, "catVideos*****************");
+    
     const fetchCategoryVideos = async (pageNum) => {
         try {
             const response = await axios.get("Main/getCategoryVideos", {

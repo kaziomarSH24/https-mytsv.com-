@@ -37,13 +37,12 @@ const Home = () => {
         try {
             const response = await axios.get("Main/getCategoryVideos");
             setCatVideos(response.data);
-            console.log(response, "response.data+++++++++++++");
+            // console.log(response, "response.data+++++++++++++");
         } catch (error) {
             toast.error('Caught Error');
         }
     };
 
-    console.log(catVideos, "catVideos");
 
     const fetchRecommended = async (page = 1) => {
         const recommendedTags = JSON.parse(localStorage.getItem("recommendedTags")) || [];
