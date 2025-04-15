@@ -2,7 +2,7 @@
 /node_modules
 /public/assets
 /public/hot
-/public/storage
+# /public/storage
 /storage
 /storage/*.key
 storage_old
