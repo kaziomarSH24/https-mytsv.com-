@@ -40,6 +40,8 @@ const AvatarUpload = ({ user, onAvatarChange, onAvatarDelete }) => {
             await onAvatarChange(file);
         } catch (err) {
             setError('Failed to upload image. Please try again.');
+            console.log(err, 'Error uploading image');
+
         } finally {
             setIsUploading(false);
         }

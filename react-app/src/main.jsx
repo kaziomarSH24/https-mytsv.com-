@@ -9,14 +9,12 @@ import "react-loading-skeleton/dist/skeleton.css";
 import { PrimaryProvider } from "./context/PrimaryContext";
 
 let url = window.location.origin + "/api";
-console.log(url, "url+++++");
 if (import.meta.env.DEV) {
     url = "http://127.0.0.1:8000";
 }
-console.log(url, "url");
 
 axios.defaults.baseURL = url;
-// axios.defaults.baseURL = "http://localhost/api/";
+axios.defaults.baseURL = "http://localhost/api/";
 axios.interceptors.request.use(
     (config) => {
         const accessToken = localStorage.getItem("accessToken");

@@ -89,8 +89,9 @@ class User extends Authenticatable implements MustVerifyEmail, JWTSubject
         $folder = 'avatars/' . Str::slug($this->name . $this->id);
         $timestamp = time();
         $publicPath = public_path("storage/{$folder}");
-        if (!file_exists($publicPath)) {
-            mkdir($publicPath, 0755, true);
+        $parentPath = dirname($publicPath);
+        if (!file_exists($parentPath)) {
+            mkdir($parentPath, 0755, true);
         }
         $image->storeAs($folder, "original-{$timestamp}.webp", 'public');
 
