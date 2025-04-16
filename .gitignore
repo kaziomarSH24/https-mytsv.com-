@@ -3,6 +3,7 @@
 /public/assets
 /public/hot
 /public/storage
+/public/index.html
 # /storage
 # /storage/*.key
 storage_old
