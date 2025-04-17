@@ -14,7 +14,7 @@ if (import.meta.env.DEV) {
 }
 
 axios.defaults.baseURL = url;
-// axios.defaults.baseURL = "http://localhost/api/";
+axios.defaults.baseURL = "http://localhost/api/";
 axios.interceptors.request.use(
     (config) => {
         const accessToken = localStorage.getItem("accessToken");

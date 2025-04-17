@@ -24,9 +24,10 @@ import { useDetectClickOutside } from "react-detect-click-outside";
 import { imageUrl } from "../../helper";
 import { usePrimary } from "../../context/PrimaryContext";
 import { Navigation, Pagination, Scrollbar, A11y } from "swiper/modules";
+import { toast } from "react-toastify";
 
 const Header = ({ states, categories, locator }) => {
-    const { query,id } = useParams();
+    const { query, id } = useParams();
     const navigate = useNavigate();
     const url = useLocation();
     const { dispatch } = usePrimary();
@@ -48,7 +49,6 @@ const Header = ({ states, categories, locator }) => {
     const locationRef = useRef(null);
     const swiperRef = useRef(null);
     //location contextApi
-
 
     const getUser = async () => {
         const user = await axios.get("Auth/Me");
@@ -93,12 +93,13 @@ const Header = ({ states, categories, locator }) => {
         }
     };
     //clear select value
-    const clearValue = () =>{
+    const clearValue = () => {
         setSelectedState(null);
         setSelectedCity(null);
-        dispatch({ type: "SET_SELECTED_LOCATION", payload: '' });
+        dispatch({ type: "SET_SELECTED_LOCATION", payload: "" });
         setLocationModal(false);
-    }
+        toast.success("Location cleared successfully!");
+    };
 
     const renderCategoryLinks = () => {
         if (!Array.isArray(categories) || !categories.length) {
@@ -190,7 +191,6 @@ const Header = ({ states, categories, locator }) => {
 
     const cityChange = (selectedOption) => {
         setSelectedCity(selectedOption);
-
     };
 
     const handleSaveLocation = async () => {
@@ -201,6 +201,7 @@ const Header = ({ states, categories, locator }) => {
             });
             dispatch({ type: "SET_SELECTED_LOCATION", payload: selectedCity });
             setLocationModal(false);
+            toast.success("Location set successfully!");
         } catch (error) {
             console.error("Failed to save location:", error);
         }
@@ -289,12 +290,12 @@ const Header = ({ states, categories, locator }) => {
                                     Close
                                 </button>
                                 <div>
-                                <button className="bg-white border rounded-xl px-8 py-2 mr-3" onClick={() => clearValue()}>
-                                    Clear
-                                </button>
-                                <button className="bg-primary text-white rounded-xl px-8 py-2" onClick={handleSaveLocation}>
-                                    Save
-                                </button>
+                                    <button className="bg-white border rounded-xl px-8 py-2 mr-3" onClick={() => clearValue()}>
+                                        Clear
+                                    </button>
+                                    <button className="bg-primary text-white rounded-xl px-8 py-2" onClick={handleSaveLocation}>
+                                        Save
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -343,6 +344,7 @@ const Header = ({ states, categories, locator }) => {
                                 <Select
                                     options={states}
                                     onChange={stateChange}
+                                    value={selectedState}
                                     placeholder="State"
                                     classNamePrefix="react-select"
                                     styles={{
@@ -367,6 +369,7 @@ const Header = ({ states, categories, locator }) => {
                                     options={citiesData}
                                     isDisabled={!selectedState}
                                     onChange={cityChange}
+                                    value={selectedCity}
                                     placeholder="City"
                                     classNamePrefix="react-select"
                                     styles={{
@@ -385,6 +388,16 @@ const Header = ({ states, categories, locator }) => {
                                         }),
                                     }}
                                 />
+                            </div>
+                        </div>
+                        <div className="flex justify-between text-base font-medium text-center gap-4">
+                            <button className="bg-white border rounded-xl px-8 py-2 mr-3" onClick={() => clearValue()}>
+                                Clear
+                            </button>
+                            <div>
+                                <button className="bg-primary text-white rounded-xl px-8 py-2" onClick={handleSaveLocation}>
+                                    Save
+                                </button>
                             </div>
                         </div>
                     </div>

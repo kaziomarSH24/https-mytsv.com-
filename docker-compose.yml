@@ -24,7 +24,7 @@ services:
       APP_DEBUG: true
       APP_KEY: base64:cthI+M/2LXa0PnPU6s9j/Mb9rpHVKDQDY3zDcXmcg90=
       DB_CONNECTION: mysql
-      DB_HOST: ${mytsv_db}
+      DB_HOST: mytsv_db
       DB_PORT: 3306
       DB_DATABASE: ${DB_DATABASE}
       DB_USERNAME: ${DB_USERNAME}
@@ -36,9 +36,9 @@ services:
     container_name: mytsv_db
     restart: unless-stopped
     environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: ${DB_DATABASE}
       MYSQL_USER: ${DB_USERNAME}
-      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
       MYSQL_PASSWORD: ${DB_PASSWORD}
     volumes:
       - db_data:/var/lib/mysql
@@ -47,7 +47,7 @@ services:
     networks:
       - mytsv_network
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-p${MYSQL_ROOT_PASSWORD}"]
       interval: 10s
       retries: 3
       start_period: 30s
@@ -85,7 +85,9 @@ services:
     environment:
       PMA_HOST: mytsv_db
       PMA_PORT: 3306
-      PMA_ARBITRARY: 1
+      PMA_USER: mytsv_root
+      PMA_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      PMA_ARBITRARY: 0
     networks:
       - mytsv_network
 
