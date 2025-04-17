@@ -24,10 +24,11 @@ services:
       APP_DEBUG: true
       APP_KEY: base64:cthI+M/2LXa0PnPU6s9j/Mb9rpHVKDQDY3zDcXmcg90=
       DB_CONNECTION: mysql
-      DB_HOST: mytsv_db
-      DB_DATABASE: mytsv_main
-      DB_USERNAME: root
-      DB_PASSWORD: root
+      DB_HOST: ${mytsv_db}
+      DB_PORT: 3306
+      DB_DATABASE: ${DB_DATABASE}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
     command: php-fpm
 
   mytsv_db:
@@ -35,8 +36,10 @@ services:
     container_name: mytsv_db
     restart: unless-stopped
     environment:
-      MYSQL_DATABASE: mytsv_main
-      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
     volumes:
       - db_data:/var/lib/mysql
     ports:
