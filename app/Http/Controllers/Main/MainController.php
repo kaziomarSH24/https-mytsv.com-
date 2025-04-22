@@ -208,7 +208,9 @@ class MainController extends Controller
         $query->where('location_id', $location_id);
     }
 
-    $videos = $query->orderBy('package', 'desc')->paginate(12);
+    $videos = $query->orderBy('package', 'desc')
+                    ->orderBy('created_at', 'desc')
+                    ->paginate(100);
 
     if ($videos->isEmpty()) {
         $videos = null;

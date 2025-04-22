@@ -116,7 +116,7 @@ class VideoController extends Controller
             }
 
             $thumbnail = $video->generateImage($request->file('thumbnail'), $videoSlug);
-        } else {
+        }else {
             $thumbnail = $request->thumbnail;
         }
 
@@ -124,21 +124,28 @@ class VideoController extends Controller
             $location = Location::find($request->location);
         }
 
-        $video = Video::updateOrCreate([
-            'id' => $request->id
-        ], [
+        $videoData = [
             'slug' => $videoSlug,
             'video' => $videoName,
-            'user_id' => $userId,
+            $request->id ? '' : 'user_id' => $userId,
             'title' => $request->title,
             'price' => $request->price,
-            $request->id ? '' : 'thumbnail' => json_encode($thumbnail),
             'status' => $status,
-            'package' => $package,
             'category_id' => $request->category,
             'location_id' => $location->id ?? 1,
             'description' => $request->description,
-        ]);
+        ];
+        if(!Video::Promotional()->exists()){
+            $videoData['package'] = $package;
+        }
+        if (!$request->id || ($request->hasFile('thumbnail') && str_starts_with($request->file('thumbnail')->getMimeType(), 'image/'))) {
+            $videoData['thumbnail'] = json_encode($thumbnail);
+        }
+
+        $video = Video::updateOrCreate(
+            ['id' => $request->id],
+            $videoData
+        );
 
         if ($package !== Package::FREE) {
             $video->delete();

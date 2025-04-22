@@ -101,6 +101,14 @@ const Header = ({ states, categories, locator }) => {
         toast.success("Location cleared successfully!");
     };
 
+    //unauthenticated user error message
+    const handleUnauthenticated = () => {
+        toast.error("Please login to continue!");
+        setTimeout(() => {
+            navigate("/Auth/Login");
+        }, 2000);
+    };
+
     const renderCategoryLinks = () => {
         if (!Array.isArray(categories) || !categories.length) {
             return (
@@ -562,9 +570,15 @@ const Header = ({ states, categories, locator }) => {
 
                     {/* Mobile Icons Section */}
                     <div className="container md:px-0 flex justify-between items-center text-2xl md:hidden py-3 border-t">
+                        {!user.id ? (
+                            <button type="button" onClick={() => handleUnauthenticated()}>
+                                <BiSolidVideoPlus className="text-primary" />
+                            </button>
+                        ) : (
                         <Link to="/User/Upload">
                             <BiSolidVideoPlus className="text-primary" />
                         </Link>
+                        )}
                         <Link to={"/blogs"}>
                             <BiNews className="text-primary" />
                         </Link>

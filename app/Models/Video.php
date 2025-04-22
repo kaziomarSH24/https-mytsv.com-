@@ -97,15 +97,12 @@ class Video extends Model
         ];
 
         $folder = 'videos/' . $slug;
-        $timestamp = time();
-        $image->storeAs($folder, "original-{$timestamp}.webp", 'public');
-
+        $image->storeAs($folder, 'original.webp', 'public');
         $generatedImages = [];
         foreach ($sizes as $key => $dimensions) {
             $img = $manager->read($image);
             $img->cover($dimensions[0], $dimensions[1]);
-            $filename = "{$key}-{$timestamp}.webp";
-            $path = "{$folder}/{$filename}";
+            $path = "{$folder}/{$key}.webp";
             $img->toWebp()->save("storage/{$path}");
             $generatedImages[$key] = $path;
         }

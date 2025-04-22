@@ -1,6 +1,7 @@
 import { FaFacebook } from "react-icons/fa";
 import { FaYoutube } from "react-icons/fa";
 import { usePrimary } from "../../context/PrimaryContext";
+import { Link } from "react-router-dom";
 
 export const Footer = () => {
 
@@ -36,13 +37,13 @@ export const Footer = () => {
                             <h1 className="text-xl font-semibold text-dark mb-6">Useful Links</h1>
                             <ul className="text-dark-gray flex flex-col gap-6">
                                 <li className="hover:text-primary-dark transition-all">
-                                    <a href="">FAQ</a>
+                                    <Link to="/faq">FAQ</Link>
                                 </li>
                                 <li className="hover:text-primary-dark transition-all">
-                                    <a href="">Registration</a>
+                                    <Link to='Auth/Register'>Registration</Link>
                                 </li>
                                 <li className="hover:text-primary-dark transition-all">
-                                    <a href="">Video Upload</a>
+                                    <Link to="/blogs">Blogs</Link>
                                 </li>
                             </ul>
                         </div>
@@ -51,13 +52,13 @@ export const Footer = () => {
                         <h1 className="text-xl font-semibold text-dark mb-6">Company</h1>
                         <ul className="text-dark-gray flex flex-col gap-6">
                             <li className="hover:text-primary-dark transition-all">
-                                <a href="">About us</a>
+                                <Link to="/about-us">About us</Link>
                             </li>
                             <li className="hover:text-primary-dark transition-all">
-                                <a href="">Contact</a>
+                                <Link to="/contact-us">Contact</Link>
                             </li>
                             <li className="hover:text-primary-dark transition-all">
-                                <a href="">Terms & Conditions</a>
+                                <Link to="/terms-conditions">Terms & Conditions</Link>
                             </li>
                         </ul>
                     </div>

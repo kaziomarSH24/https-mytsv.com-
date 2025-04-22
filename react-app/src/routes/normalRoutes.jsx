@@ -5,6 +5,10 @@ import Video from "../pages/Video";
 import Blogs from "../pages/Blogs/Blogs";
 import BlogView from "../pages/Blogs/BlogView";
 import ViewDetails from "../components/ViewDetails";
+import TermsAndConditions from "../pages/TermsAndConditions";
+import AboutUs from "../pages/AboutUs";
+import ContactForm from "../pages/ContactForm";
+import FAQPage from "../pages/FAQPage";
 export const normalRoutes = [
     {
         path: "/",
@@ -43,4 +47,20 @@ export const normalRoutes = [
             },
         ],
     },
+    {
+        path: "/terms-conditions",
+        element: <TermsAndConditions />,
+    },
+    {
+        path: "/about-us",
+        element: <AboutUs />,
+    },
+    {
+        path: "/contact-us",
+        element: <ContactForm />,
+    },
+    {
+        path:"/faq",
+        element: <FAQPage/>,
+    }
 ];

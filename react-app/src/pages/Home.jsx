@@ -10,8 +10,8 @@ const Home = () => {
     const fetchPromotedVideos = useCallback(async () => {
         try {
             const response = await axios.get("/Main/promoted-videos");
-            // console.log(response?.data?.data?.data?.length, "response888888888");
             if (response?.data?.success && response?.data?.data?.data?.length > 0) {
+                console.log(response.data.data.data, "response.data.data.data");
                 setPromotedVideos(response.data.data.data);
             }
         } catch (error) {

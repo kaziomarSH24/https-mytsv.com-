@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Auth\SocialController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\ContactFormController;
 use App\Http\Controllers\Dashboard\VideoController;
 use App\Http\Controllers\Dashboard\ProfileController;
 use App\Http\Controllers\Main\VideoInteractionController;
@@ -80,7 +81,8 @@ Route::group(['middleware' => 'auth:api', 'prefix' => 'Dashboard'], function ($r
     });
 });
 
-
+//contact form subbmission mail
+Route::post('ContactForm', [ContactFormController::class, 'submitForm']);
 // Route::get('check/Video', [MainController::class, 'getCategoryVideos']);
 Route::get('/test', function () {
     return response()->json(['message' => 'API working!']);
