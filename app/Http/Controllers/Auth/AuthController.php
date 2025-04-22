@@ -47,7 +47,7 @@ class AuthController extends Controller
     }
     public function me()
     {
-        return response()->json(Auth::user());
+        return response()->json(Auth::user()->toArray());
     }
 
     public function logout()

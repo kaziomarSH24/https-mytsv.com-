@@ -1,7 +1,7 @@
 const domain = 'https://mytsv.com/api/';
 
 export const storage = () => {
-    const storage = domain.replace('api', 'storage/');
+    const storage = domain.replace('api', 'storage');
     return storage;
 };
 

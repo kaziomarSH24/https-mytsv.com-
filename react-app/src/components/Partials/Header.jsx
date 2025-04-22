@@ -52,9 +52,11 @@ const Header = ({ states, categories, locator }) => {
 
     const getUser = async () => {
         const user = await axios.get("Auth/Me");
-        // dispatch({ type: "SET_USER", payload: user.data });
+        dispatch({ type: "SET_USER", payload: user.data });
         setUser(user.data);
     };
+
+
     // console.log(selectedCity, "Selected City");
     // console.log(citiesData, "Cities Data");
     const getLocation = async () => {

@@ -6,7 +6,7 @@ import { imageUrl } from "../../helper";
 import moment from "moment";
 import PromotionBadge from "../Common/PromotionBadge";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination, Scrollbar, A11y, Autoplay } from "swiper/modules";
+import { Autoplay } from "swiper/modules";
 const PromotedVideo = ({ videos, title = "Promotional Video", className }) => {
     return (
         <section className={className}>
