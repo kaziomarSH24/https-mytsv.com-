@@ -24,7 +24,7 @@ const Profile = () => {
                     const res = await axios.get("Main/getUser", {
                         params: { id: params.id },
                     });
-                    console.log(res.data, "res.data");
+                    // console.log(res.data, "res.data");
                     setUserInfo(res.data?.user);
                     setReviews(res.data?.reviews);
                     setVideos(res.data?.videos);
@@ -52,8 +52,6 @@ const Profile = () => {
         reviewInfo({});
     };
 
-
-console.log(userInfo?.avatar?.default, "userInfo");
     return (
         <>
             <div className="pt-12 pb-28 pattern bg-red-950">

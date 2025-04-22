@@ -11,7 +11,7 @@ const Home = () => {
         try {
             const response = await axios.get("/Main/promoted-videos");
             if (response?.data?.success && response?.data?.data?.data?.length > 0) {
-                console.log(response.data.data.data, "response.data.data.data");
+                // console.log(response.data.data.data, "response.data.data.data");
                 setPromotedVideos(response.data.data.data);
             }
         } catch (error) {

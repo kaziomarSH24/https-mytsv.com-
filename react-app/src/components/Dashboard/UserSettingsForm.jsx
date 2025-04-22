@@ -6,7 +6,7 @@ import CreatableSelect from 'react-select/creatable';
 import AvatarUpload from '../Common/AvatarUpload';
 
 const UserSettingsForm = ({ endpoint, userInfo, onSuccess }) => {
-    console.log('end point', endpoint);
+    // console.log('end point', endpoint);
     const [user, setUser] = useState({});
     const [skills, setSkills] = useState([]);
     const [languages, setLanguages] = useState([]);

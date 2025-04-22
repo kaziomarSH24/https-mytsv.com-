@@ -22,8 +22,8 @@ const ViewDetails = ({ catId }) => {
     const { state } = usePrimary();
     const [loading, setLoading] = useState(true);
 
-    console.log(isNumber(prms), "isNumber(prms)");
-    console.log(prms, "prms");
+    // console.log(isNumber(prms), "isNumber(prms)");
+    // console.log(prms, "prms");
     // console.log(catId, "catId");
 
     const fetchVideos = async (pageNum = 1) => {
