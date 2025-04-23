@@ -4,7 +4,7 @@ import ViewDetails from "../components/ViewDetails";
 
 const Search = () => {
     const { id } = useParams();
-
+    
     return (
         <>
            <Slider />

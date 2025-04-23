@@ -425,10 +425,10 @@ const Header = ({ states, categories, locator }) => {
                                 <AiFillPlayCircle className="text-primary" />
                                 My Videos
                             </Link>
-                            <Link to={"/User/Analytics"} className="flex items-center gap-3">
+                            {/* <Link to={"/User/Analytics"} className="flex items-center gap-3">
                                 <BsGraphUpArrow className="text-primary" />
                                 Analytics
-                            </Link>
+                            </Link> */}
                             <Link to={"/User/Upload"} className="flex items-center gap-3">
                                 <CgProfile className="text-primary" />
                                 Promotion
@@ -513,10 +513,10 @@ const Header = ({ states, categories, locator }) => {
                                             <AiFillPlayCircle className="text-primary text-lg" />
                                             My Videos
                                         </Link>
-                                        <Link to={`/User/Analytics`} className="flex items-center gap-3 text-blue-900 text-sm mb-1">
+                                        {/* <Link to={`/User/Analytics`} className="flex items-center gap-3 text-blue-900 text-sm mb-1">
                                             <BsGraphUpArrow className="text-primary text-lg" />
                                             Analytics
-                                        </Link>
+                                        </Link> */}
                                         <Link to={`/User/Upload`} className="flex items-center gap-3 text-blue-900 text-sm mb-1">
                                             <CgProfile className="text-primary text-lg" />
                                             Promotion

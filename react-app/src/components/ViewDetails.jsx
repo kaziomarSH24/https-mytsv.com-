@@ -22,21 +22,30 @@ const ViewDetails = ({ catId }) => {
     const { state } = usePrimary();
     const [loading, setLoading] = useState(true);
 
-    // console.log(isNumber(prms), "isNumber(prms)");
-    // console.log(prms, "prms");
-    // console.log(catId, "catId");
-
+    let searchQuery = null;
+    if(isNumber(catId) == false){
+         searchQuery = catId;
+    }
+    
     const fetchVideos = async (pageNum = 1) => {
+        setLoading(true);
         try {
             let response = null;
             if (prms === "promotion") {
                 response = await axios.get("/Main/promoted-videos");
                 response = response?.data;
-            } else {
+            } else if (isNumber(catId) === false && searchQuery) {
+                response = await axios.get("Main/getVideos", {
+                    params: {
+                        search: searchQuery,
+                    },
+                });
+            }else {
                 response = await axios.get("Main/category-video", {
                     params: {
                         category_id: prms ?? catId,
                         page: pageNum,
+
                         location_id: state?.selectedLocation?.value ?? "",
                     },
                 });

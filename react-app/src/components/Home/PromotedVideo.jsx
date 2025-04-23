@@ -31,6 +31,7 @@ const PromotedVideo = ({ videos, title = "Promotional Video", className }) => {
                                 disableOnInteraction: false,
                             }}
                             breakpoints={{
+                                230: { slidesPerView: 1, spaceBetween: 20 },
                                 640: { slidesPerView: 2, spaceBetween: 15 },
                                 1024: { slidesPerView: 3, spaceBetween: 15 },
                                 1280: { slidesPerView: 4, spaceBetween: 15 },

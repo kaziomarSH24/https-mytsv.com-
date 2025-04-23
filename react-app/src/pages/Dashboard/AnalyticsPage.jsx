@@ -18,10 +18,12 @@ const AnalyticsPage = () => {
         try {
             const response = await axios.get("Dashboard/MyVideos");
             setVideos(response.data);
+            setVideos(['video1', 'video2', 'video3', 'video4']);
         } catch (error) {
             toast.error(error.response?.data?.message ?? "Caught error");
         }
     };
+ console.log(videos, "videos");
 
     useEffect(() => {
         fetchVideos();
