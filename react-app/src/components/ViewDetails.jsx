@@ -26,9 +26,9 @@ const ViewDetails = ({ catId }) => {
     if(isNumber(catId) == false){
          searchQuery = catId;
     }
-    
+
     const fetchVideos = async (pageNum = 1) => {
-        setLoading(true);
+        // setLoading(true);
         try {
             let response = null;
             if (prms === "promotion") {

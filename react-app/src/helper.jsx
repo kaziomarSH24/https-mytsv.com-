@@ -1,4 +1,4 @@
-const domain = 'http://127.0.0.1:8000/api/';
+const domain = 'https://mytsv.com/api/';
 
 export const storage = () => {
     const storage = domain.replace('api', 'storage');
