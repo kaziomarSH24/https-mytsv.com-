@@ -32,7 +32,7 @@ class PaymentController extends Controller
 
         Video::withTrashed()->find($order->video_id)->restore();
 
-        // return redirect('/User/Videos');
-        return redirect()->back();
+        return redirect('/');
+        // return redirect()->back();
     }
 }
