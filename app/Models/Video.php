@@ -18,9 +18,14 @@ class Video extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['slug', 'title', 'description', 'video', 'user_id', 'thumbnail', 'price', 'package', 'status', 'category_id', 'location_id'];
+    protected $fillable = ['slug', 'title', 'description', 'video', 'user_id', 'thumbnail', 'price', 'package', 'status', 'category_id', 'location_id','created_at'];
 
     public $appends = ['location', 'likes', 'category', 'dislikes', 'comments_count', 'shares', 'views'];
+
+
+    protected $casts = [
+        'created_at' => 'datetime',
+    ];
 
     public function scopePublished(Builder $query): void
     {

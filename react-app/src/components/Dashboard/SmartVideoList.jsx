@@ -7,7 +7,7 @@ import { CiEdit, CiSearch } from "react-icons/ci";
 import { MdOutlineDelete, MdOutlineVideoSettings } from "react-icons/md";
 import ReactPlayer from "react-player";
 import Pagination from "../Common/Pagination";
-import { debounce, imageUrl } from "../../helper";
+import { debounce, imageUrl, shouldShowBadge } from "../../helper";
 import { useCallback } from "react";
 
 const SmartVideosList = ({ userRole = 'user' }) => {
@@ -35,7 +35,7 @@ const SmartVideosList = ({ userRole = 'user' }) => {
             setLoading(false);
         }
     };
-
+    console.log(videos);
     const debouncedFetchVideos = useCallback(
         debounce((search, page) => {
             fetchVideos(page, search);
@@ -129,6 +129,7 @@ const SmartVideosList = ({ userRole = 'user' }) => {
             { header: "Video", width: "25%" },
             { header: "User", width: "auto" },
             { header: "Category", width: "auto" },
+            { header: "Package", width: "auto" },
             { header: "Status", width: "auto" }
         ];
 
@@ -212,6 +213,21 @@ const SmartVideosList = ({ userRole = 'user' }) => {
                                                 </div>
                                             </td>
                                             <td className="px-6 py-4">{video.category?.title}</td>
+                                            <td className="px-6 py-4">
+
+                                                {shouldShowBadge(video) ? (
+                                                    <div className={` z-30 m-2 px-4 py-1 rounded-md text-[12px] font-Roboto text-white opacity-100 group-hover:opacity-100 transition-opacity duration-300 ${video?.package == 3 ? 'bg-green-500' : 'bg-orange-500'}`}>
+                                                        {video?.package == 3 ? '🚀 Promoted' : '👑 Premium'}
+                                                    </div>
+                                                ) : (
+                                                    <div className="flex items-center gap-2">
+                                                        <span className="text-sm text-gray-500">Free</span>
+                                                    </div>
+                                                )
+                                                }
+
+                                                </td>
+
                                             <th className="px-6 py-4 uppercase font text-gray-600">{video.status}</th>
 
                                             {/* Admin Actions */}

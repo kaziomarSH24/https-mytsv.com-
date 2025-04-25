@@ -21,7 +21,7 @@ Route::get('/payment/cancel', [PaymentController::class, 'success'])->name('chec
 
 //create a test route
 Route::get('/test', function () {
-    return view('welcome'); 
+    return view('welcome');
 });
 
 Route::any('{catchall}', [Controller::class, 'firstLoader'])->where("catchall", ".*");

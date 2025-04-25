@@ -56,7 +56,6 @@ const Header = ({ states, categories, locator }) => {
         setUser(user.data);
     };
 
-
     // console.log(selectedCity, "Selected City");
     // console.log(citiesData, "Cities Data");
     const getLocation = async () => {
@@ -509,10 +508,17 @@ const Header = ({ states, categories, locator }) => {
                                             Sign Out
                                         </button>
                                         <hr className="my-3" />
-                                        <Link to={`/User/Videos`} className="flex items-center gap-3 text-blue-900 text-sm mb-1">
-                                            <AiFillPlayCircle className="text-primary text-lg" />
-                                            My Videos
-                                        </Link>
+                                        {user?.admin === 1 ? (
+                                            <Link to={`/admin/Videos`} className="flex items-center gap-3 text-blue-900 text-sm mb-1">
+                                                <AiFillPlayCircle className="text-primary text-lg" />
+                                                My Videos
+                                            </Link>
+                                        ) : (
+                                            <Link to={`/User/Videos`} className="flex items-center gap-3 text-blue-900 text-sm mb-1">
+                                                <AiFillPlayCircle className="text-primary text-lg" />
+                                                My Videos
+                                            </Link>
+                                        )}
                                         {/* <Link to={`/User/Analytics`} className="flex items-center gap-3 text-blue-900 text-sm mb-1">
                                             <BsGraphUpArrow className="text-primary text-lg" />
                                             Analytics
@@ -577,9 +583,9 @@ const Header = ({ states, categories, locator }) => {
                                 <BiSolidVideoPlus className="text-primary" />
                             </button>
                         ) : (
-                        <Link to="/User/Upload">
-                            <BiSolidVideoPlus className="text-primary" />
-                        </Link>
+                            <Link to="/User/Upload">
+                                <BiSolidVideoPlus className="text-primary" />
+                            </Link>
                         )}
                         <Link to={"/blogs"}>
                             <BiNews className="text-primary" />

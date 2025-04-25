@@ -43,6 +43,7 @@ class VideoController extends Controller
     }
     public function store(Request $request)
     {
+
         $userId = Auth::user()->id;
         // $request->validate([
         //     'title' => 'required',
@@ -58,9 +59,9 @@ class VideoController extends Controller
             'description' => 'required',
             'price' => 'required|integer',
             'video' => 'required',
-            'thumbnail' => $request->id ? 'nullable' : 'required|' ."image|mimes:jpeg,png,jpg,svg",
+            'thumbnail' => $request->id ? 'nullable' : 'required|' . "image|mimes:jpeg,png,jpg,svg",
             'category' => 'required',
-            ]);
+        ]);
 
         if ($validation->fails()) {
             return response()->json([
@@ -116,7 +117,7 @@ class VideoController extends Controller
             }
 
             $thumbnail = $video->generateImage($request->file('thumbnail'), $videoSlug);
-        }else {
+        } else {
             $thumbnail = $request->thumbnail;
         }
 
@@ -135,20 +136,33 @@ class VideoController extends Controller
             'location_id' => $location->id ?? 1,
             'description' => $request->description,
         ];
-        if(!Video::Promotional()->exists()){
+
+        $hasRecentPromotional = Video::where('id', $request->id)->Promotional()->exists();
+        if (!$hasRecentPromotional && $request->id) {
+            $videoData['package'] = $package;
+            $videoData['created_at'] = now();
+        } elseif (!$request->id) {
             $videoData['package'] = $package;
         }
+        Log::info($videoData);
         if (!$request->id || ($request->hasFile('thumbnail') && str_starts_with($request->file('thumbnail')->getMimeType(), 'image/'))) {
             $videoData['thumbnail'] = json_encode($thumbnail);
         }
 
-        $video = Video::updateOrCreate(
-            ['id' => $request->id],
-            $videoData
-        );
+        $video = Video::find($request->id);
+
+        if ($video) {
+
+            $video->update($videoData);
+        } else {
+
+            $video = Video::create($videoData);
+        }
 
         if ($package !== Package::FREE) {
-            $video->delete();
+            if(!$request->id) {
+                $video->delete();
+            }
             $transaction = new Transaction();
             $res = $transaction->createOrder($package, $video->id);
             return response()->json(['url' => $res->url]);
@@ -188,8 +202,9 @@ class VideoController extends Controller
         ]);
         return response()->json(['status' => 'success']);
     }
-    public function destroy($id){
+    public function destroy($id)
+    {
         $video = Video::find($id)->delete();
-        return response()->json(['status'=> $video ? 'success' : 'error']);
+        return response()->json(['status' => $video ? 'success' : 'error']);
     }
 }
